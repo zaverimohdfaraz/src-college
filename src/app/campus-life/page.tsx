@@ -16,25 +16,25 @@ const strands = [
     title: "Culture and celebration",
     text: "The Cultural Committee organises events through the year, and the Annual Day brings the whole college together to celebrate talent and achievement. Students plan, host and perform, gaining confidence on and off the stage.",
     img: "Annual Day celebrations",
-    photo: photos.hall as Photo | undefined,
+    photo: photos.cultural as Photo | undefined,
   },
   {
     title: "Sport and fitness",
     text: "The Gymkhana Committee runs sport at the college, including the annual Sports Day. The college gymnasium gives students a place to stay active alongside their studies.",
     img: "Sports Day",
-    photo: photos.sports,
+    photo: photos.sportsGround,
   },
   {
     title: "Service to the community",
     text: "Through the National Service Scheme (NSS) and community initiatives — tree plantation drives, blood donation camps, nutritious food distribution and village visits — students put their education to work for others.",
     img: "NSS plantation drive",
-    photo: undefined,
+    photo: photos.nss,
   },
   {
     title: "Learning beyond lectures",
     text: "Guest lectures, seminars, workshops, conferences and industrial visits introduce students to professionals and workplaces, and help them see how classroom ideas are used in practice.",
     img: "Guest lecture or seminar",
-    photo: photos.session,
+    photo: photos.ivGroup,
   },
 ];
 
@@ -56,14 +56,14 @@ export default function CampusLifePage() {
         crumbs={[{ label: "Campus life" }]}
         title="Campus life"
         intro="College is about more than lectures. Clubs, committees, sport and service give every student the chance to lead, create and contribute."
-        image={{ label: "Students in a classroom", ...photos.classroomStudents }}
+        image={{ label: "College ground", ...photos.groundEvent }}
       />
 
       <section aria-label="Student life" className="py-16 lg:py-24">
         <Container className="space-y-20 lg:space-y-28">
           {strands.map((s, i) => (
             <article key={s.title} className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
-              <Media label={s.img} src={s.photo?.src} alt={s.photo?.alt ?? s.img} className={`aspect-[3/2] w-full lg:col-span-7 ${i % 2 ? "lg:order-2" : ""}`} />
+              <Media label={s.img} src={s.photo?.src} pos={s.photo?.pos} alt={s.photo?.alt ?? s.img} className={`aspect-[3/2] w-full lg:col-span-7 ${i % 2 ? "lg:order-2" : ""}`} />
               <div className={`lg:col-span-5 ${i % 2 ? "lg:order-1" : ""}`}>
                 <h2 className="t-h2">{s.title}</h2>
                 <p className="mt-5 text-ink-soft measure">{s.text}</p>
@@ -93,10 +93,10 @@ export default function CampusLifePage() {
       <section aria-labelledby="h-gallery" className="py-16 lg:py-24">
         <Container>
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeading id="h-gallery" title="Gallery" intro="A look around the college: its classrooms, laboratories, hall and the people who make it work." />
+            <SectionHeading id="h-gallery" title="Gallery" intro="Moments from college life: events on the ground, the stage, NSS drives, industrial visits and everyday learning." />
           </div>
           <div className="mt-12 grid grid-cols-2 gap-4 md:grid-flow-dense md:grid-cols-4">
-            {[photos.hall, photos.session, photos.sports, photos.trophies, photos.labTeaching, photos.classroomStudents, photos.corridor, photos.facultyMeeting, photos.lab, photos.office].map((g, i) => (
+            {[photos.groundEvent, photos.cultural, photos.sportsGround, photos.nss, photos.ivDemo, photos.ivGroup, photos.nss2, photos.corridorStudents, photos.session, photos.labTeaching].map((g, i) => (
               <Media
                 key={g.src}
                 label={g.alt}

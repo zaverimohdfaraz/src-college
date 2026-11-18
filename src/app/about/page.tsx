@@ -57,7 +57,7 @@ export default function AboutPage() {
         crumbs={[{ label: "About" }]}
         title="About the college"
         intro="Founded in 2009 by the Jana Seva Sangh, Shri Ram College of Commerce & Science brings university education to students of Bhandup and the eastern suburbs of Mumbai."
-        image={{ label: "College building", ...photos.exterior }}
+        image={{ label: "College building", ...photos.front }}
       />
 
       <Container className="grid gap-12 py-16 lg:grid-cols-12 lg:py-24">

@@ -46,7 +46,7 @@ const slides: Slide[] = [
     rail: "Campus life",
     title: "Learning that carries on beyond the classroom",
     body: "Mentoring, guest lectures, industrial visits, NSS, cultural events and sport help students grow in confidence as well as knowledge.",
-    image: { label: "College hall", ...photos.hall },
+    image: { label: "College ground", ...photos.groundEvent },
     primary: { label: "Discover campus life", href: "/campus-life" },
   },
 ];
@@ -269,8 +269,8 @@ export default function Home() {
           </div>
           <div className="mt-14 grid gap-5 md:grid-cols-6">
             <figure className="flex flex-col md:col-span-4 md:row-span-2">
-              <Media label="College building" {...photos.corridor} className="aspect-[4/3] w-full md:aspect-auto md:flex-1" />
-              <figcaption className="t-caption mt-3">Inside the college building, Bhandup West</figcaption>
+              <Media label="College building" {...photos.corridorStudents} className="aspect-[4/3] w-full md:aspect-auto md:flex-1" />
+              <figcaption className="t-caption mt-3">Inside the college, Bhandup West</figcaption>
             </figure>
             <figure className="md:col-span-2">
               <Media label="Classroom" {...photos.classroom} className="aspect-[4/3] w-full" />

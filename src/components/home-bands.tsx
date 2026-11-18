@@ -90,10 +90,10 @@ export function StatsBand() {
 }
 
 const life = [
-  { title: "Cultural events", text: "Annual Day and celebrations through the year", img: "Cultural event on stage", photo: photos.hall },
-  { title: "Sport", text: "Gymkhana, Sports Day and the gymnasium", img: "Sports Day", photo: photos.sports },
-  { title: "NSS and service", text: "Plantation drives, blood donation, village visits", img: "NSS activity", photo: undefined as Photo | undefined },
-  { title: "Seminars and visits", text: "Guest lectures, workshops and industrial visits", img: "Guest lecture", photo: photos.session },
+  { title: "Cultural events", text: "Annual Day and celebrations through the year", img: "Cultural event on stage", photo: photos.cultural },
+  { title: "Sport", text: "Gymkhana, Sports Day and the gymnasium", img: "Sports Day", photo: photos.sportsGround },
+  { title: "NSS and service", text: "Plantation drives, blood donation, village visits", img: "NSS activity", photo: photos.nss as Photo | undefined },
+  { title: "Seminars and visits", text: "Guest lectures, workshops and industrial visits", img: "Guest lecture", photo: photos.ivDemo },
 ];
 
 export function CampusLifeHighlights() {
@@ -114,7 +114,7 @@ export function CampusLifeHighlights() {
           {life.map((l) => (
             <li key={l.title}>
               <Link href="/campus-life" className="group relative block overflow-hidden">
-                <Media label={l.img} src={l.photo?.src} alt={l.photo?.alt ?? l.img} labelTop className="aspect-[3/4] w-full transition-transform duration-700 group-hover:scale-[1.03]" />
+                <Media label={l.img} src={l.photo?.src} pos={l.photo?.pos} alt={l.photo?.alt ?? l.img} labelTop className="aspect-[3/4] w-full transition-transform duration-700 group-hover:scale-[1.03]" />
                 <div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(0deg,rgba(29,27,30,0.92),rgba(29,27,30,0.55)_60%,transparent)] p-6 pt-16 text-white">
                   <span aria-hidden className="mb-3 block h-[3px] w-8 bg-red-bright transition-[width] duration-300 group-hover:w-14" />
                   <p className="font-serif text-[1.625rem] leading-tight">{l.title}</p>

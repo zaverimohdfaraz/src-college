@@ -3,9 +3,9 @@
  * Alt text describes what each photo actually shows. To replace a photo, drop a new file into
  * public/images/campus/ with the same name, or point the entry at a new file.
  */
-export type Photo = { src: string; alt: string };
+export type Photo = { src: string; alt: string; pos?: string };
 
-const p = (file: string, alt: string): Photo => ({ src: `/images/campus/${file}.webp`, alt });
+const p = (file: string, alt: string, pos?: string): Photo => ({ src: `/images/campus/${file}.webp`, alt, pos });
 
 export const photos = {
   exterior: p("building-exterior", "Front of the college building with the Shri Ram College of Commerce & Science sign"),
@@ -27,4 +27,14 @@ export const photos = {
   facultyMeeting: p("faculty-meeting", "Faculty members in a meeting around a table"),
   faculty: p("faculty", "Two faculty members working together at a table"),
   office: p("college-office", "The college office with staff at their desks"),
+  // Supplied by the college (Nov 2026)
+  front: p("college-front", "Front of the college building with the Shri Ram College sign"),
+  corridorStudents: p("campus-corridor-students", "Students walking along a corridor inside the college"),
+  groundEvent: p("college-ground-event", "Students gathered for an event on the college ground"),
+  sportsGround: p("sports-ground", "Students playing badminton on the college ground", "50% 85%"),
+  cultural: p("cultural-performance", "A student performing on stage at the Ayodhyam intercollegiate festival"),
+  nss: p("nss-plantation", "NSS volunteers planting saplings during a plantation drive"),
+  nss2: p("nss-plantation-2", "An NSS volunteer carrying saplings at a plantation drive"),
+  ivGroup: p("industrial-visit-group", "Students on an industrial visit in Bhandup West"),
+  ivDemo: p("industrial-visit-demo", "Students watching a machine demonstration during an industrial visit", "50% 80%"),
 } as const;

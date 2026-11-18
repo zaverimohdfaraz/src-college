@@ -49,6 +49,7 @@ export function Media({
   labelTop,
   hideLabel,
   still,
+  pos,
 }: {
   src?: string;
   alt: string;
@@ -61,6 +62,8 @@ export function Media({
   hideLabel?: boolean;
   /** Turn off the scroll reveal (e.g. images that are on screen at load). */
   still?: boolean;
+  /** CSS object-position, to keep the subject in frame when cropped. */
+  pos?: string;
 }) {
   if (src) {
     return (
@@ -71,6 +74,7 @@ export function Media({
           fill
           sizes={sizes}
           priority={priority}
+          style={pos ? { objectPosition: pos } : undefined}
           className={cx(
             "object-cover transition-[scale] duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/media:scale-[1.04]",
             !priority && !still && "media-reveal",

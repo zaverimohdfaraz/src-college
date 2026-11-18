@@ -73,9 +73,9 @@ export default function Header() {
           <p className="truncate">
             Affiliated to the {site.affiliation}
             <span aria-hidden className="mx-2.5 text-white/50">|</span>
-            NAAC Re-accredited 'B+' GRADE
-            {/* <span aria-hidden className="mx-2.5 text-white/50">|</span>
-            Est. {site.establishedYear} */}
+            NAAC accredited
+            <span aria-hidden className="mx-2.5 text-white/50">|</span>
+            Est. {site.establishedYear}
           </p>
           <ul className="flex shrink-0 items-center gap-5">
             {[

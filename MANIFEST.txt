@@ -1,26 +1,37 @@
-SRCC website — update package 2 (18 Nov 2026)
+SRCC website — update package 3 (18 Nov 2026)
 =============================================
-This package REPLACES the earlier srcc-website-update.zip and includes everything in it.
+This package REPLACES the earlier update zips and includes everything in them.
 Unzip over your srcc-website folder, overwrite when asked, then push and redeploy.
 No new packages, so no npm install is needed.
 
-WHAT CHANGED
-1. Logo: refined crest + college name as sharp text in header, mobile menu and footer
-   (public/emblem.webp, src/components/Brand.tsx). New favicon and phone home-screen icon.
-2. Name: "Shri Ram College of Commerce & Science" across the site, titles, emails and README.
-3. Homepage slider on phones: the slider now grows to fit its text, so the headline no longer
-   slides under the header on iPhones/Android. Slightly smaller headline and tighter spacing
-   on phones; stronger shading behind the text so it reads clearly over the photo.
-4. Design polish:
-   - Photos gently uncover as you scroll to them (CSS only, off for reduced-motion users).
-   - Photos zoom slightly on hover.
-   - "Why Shri Ram College" section now has a photo beside the heading.
-5. Header navigation fits on one line with the new logo; header fits 320px phones.
-   Footer phone numbers each on their own line.
+NEW IN THIS PACKAGE: college-supplied photos (staff photos not used)
+- Homepage: slider "Campus life" slide uses the college-ground event photo; the four
+  campus-life cards now show the Ayodhyam stage performance, badminton on the ground,
+  the NSS plantation drive and an industrial visit; "Inside the college" uses the
+  corridor-with-students photo.
+- Campus Life page: header photo, all four sections (culture, sport, NSS, industrial visit)
+  and a new 10-photo gallery. The NSS placeholder is gone.
+- About page header: the new "SHRI RAM COLLEGE" building-front photo.
+- The "GPS Map Camera" location stamps were cropped off the NSS and industrial-visit photos.
+
+ALSO INCLUDED (from earlier updates)
+- Refined crest logo with the name as sharp text; new favicon and home-screen icon.
+- "Shri Ram College of Commerce & Science" everywhere.
+- Homepage slider fits its text on phones (no overlap under the header).
+- Photos uncover gently on scroll and zoom slightly on hover; photo in "Why Shri Ram College".
 
 FILES IN THIS PACKAGE
   README.md
   public/emblem.webp
+  public/images/campus/campus-corridor-students.webp
+  public/images/campus/college-front.webp
+  public/images/campus/college-ground-event.webp
+  public/images/campus/cultural-performance.webp
+  public/images/campus/industrial-visit-demo.webp
+  public/images/campus/industrial-visit-group.webp
+  public/images/campus/nss-plantation-2.webp
+  public/images/campus/nss-plantation.webp
+  public/images/campus/sports-ground.webp
   src/app/about/page.tsx
   src/app/academics/page.tsx
   src/app/admissions/page.tsx
@@ -43,7 +54,9 @@ FILES IN THIS PACKAGE
   src/components/Footer.tsx
   src/components/Header.tsx
   src/components/HeroSlider.tsx
+  src/components/home-bands.tsx
   src/components/ui.tsx
+  src/lib/images.ts
   src/lib/site.ts
 
 OPTIONAL CLEAN-UP
