@@ -122,6 +122,22 @@ export default function Footer() {
           </ul>
         </Container>
       </div>
+       <div className="border-t border-white/10 bg-black/25">
+        <Container className="flex min-h-14 items-center justify-center py-3 text-center text-[1rem] text-white/70">
+          <p>
+            Designed and developed by{" "}
+            <a
+              href="https://www.nexorasoln.com/"
+              target="_blank"
+              rel="noopener"
+              className="inline-flex min-h-11 items-center font-semibold text-white underline decoration-red-bright decoration-2 underline-offset-4 transition-colors hover:text-red-bright lg:min-h-0"
+            >
+              Nexora Solutions
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </p>
+        </Container>
+      </div>
     </footer>
   );
 }
