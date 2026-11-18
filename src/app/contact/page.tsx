@@ -7,7 +7,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Address, phone numbers, email, map and directions for Jana Seva Sangh's Shri Ram College of Commerce, Datta Mandir Road, Bhandup West, Mumbai 400078.",
+    "Address, phone numbers, email, map and directions for Jana Seva Sangh's Shri Ram College of Commerce & Science, Datta Mandir Road, Bhandup West, Mumbai 400078.",
   alternates: { canonical: "/contact" },
 };
 

@@ -7,7 +7,7 @@ import { photos, type Photo } from "@/lib/images";
 export const metadata: Metadata = {
   title: "Campus life",
   description:
-    "Cultural events, sport, NSS, DLLE, student council and community service at Shri Ram College of Commerce, Bhandup West.",
+    "Cultural events, sport, NSS, DLLE, student council and community service at Shri Ram College of Commerce & Science, Bhandup West.",
   alternates: { canonical: "/campus-life" },
 };
 

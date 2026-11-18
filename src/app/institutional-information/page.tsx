@@ -6,7 +6,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Institutional information",
   description:
-    "Committees, quality assurance, accreditation documents, mandatory disclosures and alumni information for Shri Ram College of Commerce, Bhandup West.",
+    "Committees, quality assurance, accreditation documents, mandatory disclosures and alumni information for Shri Ram College of Commerce & Science, Bhandup West.",
   alternates: { canonical: "/institutional-information" },
 };
 

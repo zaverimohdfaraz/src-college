@@ -7,7 +7,7 @@ import { courses } from "@/lib/courses";
 export const metadata: Metadata = {
   title: "Programmes",
   description:
-    "Browse undergraduate and postgraduate programmes at Shri Ram College of Commerce, Bhandup: B.Com., B.A.F., B.B.I., B.M.S., B.A., B.Sc. I.T., B.Sc. C.S., M.Com., MBA and MCA.",
+    "Browse undergraduate and postgraduate programmes at Shri Ram College of Commerce & Science, Bhandup: B.Com., B.A.F., B.B.I., B.M.S., B.A., B.Sc. I.T., B.Sc. C.S., M.Com., MBA and MCA.",
   alternates: { canonical: "/courses" },
 };
 

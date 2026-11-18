@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { navigation, site, formatPhone } from "@/lib/site";
 import { cx, Arrow } from "./ui";
+import { Brand } from "./Brand";
 
 export default function Header() {
   const pathname = usePathname();
@@ -22,13 +22,11 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close menus on route change (adjusting state during render, as React recommends).
-  const [lastPath, setLastPath] = useState(pathname);
-  if (pathname !== lastPath) {
-    setLastPath(pathname);
+  // Close menus on route change.
+  useEffect(() => {
     setOpen(null);
     setMobile(false);
-  }
+  }, [pathname]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -75,9 +73,9 @@ export default function Header() {
           <p className="truncate">
             Affiliated to the {site.affiliation}
             <span aria-hidden className="mx-2.5 text-white/50">|</span>
-            NAAC accredited
-            <span aria-hidden className="mx-2.5 text-white/50">|</span>
-            Est. {site.establishedYear}
+            NAAC Re-accredited 'B+' GRADE
+            {/* <span aria-hidden className="mx-2.5 text-white/50">|</span>
+            Est. {site.establishedYear} */}
           </p>
           <ul className="flex shrink-0 items-center gap-5">
             {[
@@ -111,18 +109,11 @@ export default function Header() {
           )}
         >
           <Link href="/" className="shrink-0" aria-label={`${site.name}, home`}>
-            <Image
-              src="/logo.webp"
-              alt={`${site.name} logo`}
-              width={375}
-              height={134}
-              preload
-              className={cx("w-auto transition-[height] duration-300", scrolled ? "h-[48px]" : "h-[56px] sm:h-[62px]")}
-            />
+            <Brand priority size={scrolled ? "sm" : "md"} />
           </Link>
 
           <nav aria-label="Main" className="hidden xl:block">
-            <ul className="flex items-center gap-1">
+            <ul className="flex items-center gap-0.5 2xl:gap-1">
               {navigation.map((g) => {
                 const hasMenu = !!g.columns;
                 const expanded = open === g.label;
@@ -135,7 +126,7 @@ export default function Header() {
                         aria-controls="mega-panel"
                         onClick={() => setOpen(expanded ? null : g.label)}
                         className={cx(
-                          "relative flex h-11 items-center gap-1.5 px-3 text-[1.0625rem] font-medium transition-colors",
+                          "relative flex h-11 items-center gap-1.5 whitespace-nowrap px-2.5 text-[1rem] font-medium transition-colors 2xl:px-3 2xl:text-[1.0625rem]",
                           isActive(g.href) || expanded ? "text-maroon" : "text-ink hover:text-maroon",
                         )}
                       >
@@ -150,7 +141,7 @@ export default function Header() {
                         href={g.href}
                         aria-current={isActive(g.href) ? "page" : undefined}
                         className={cx(
-                          "relative flex h-11 items-center px-3 text-[1.0625rem] font-medium transition-colors",
+                          "relative flex h-11 items-center whitespace-nowrap px-2.5 text-[1rem] font-medium transition-colors 2xl:px-3 2xl:text-[1.0625rem]",
                           isActive(g.href) ? "text-maroon" : "text-ink hover:text-maroon",
                         )}
                       >
@@ -167,13 +158,13 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <Link
               href="/admissions#enquire"
-              className="hidden h-11 items-center rounded-[3px] bg-red px-5 text-[1.0625rem] font-semibold text-white transition-colors hover:bg-maroon sm:inline-flex"
+              className="hidden h-11 items-center whitespace-nowrap rounded-[3px] bg-red px-5 text-[1.0625rem] font-semibold text-white transition-colors hover:bg-maroon sm:inline-flex"
             >
               Enquire now
             </Link>
             <button
               type="button"
-              className="flex h-11 items-center gap-2 rounded-[3px] border border-ink/20 px-3.5 text-[1.0625rem] font-medium xl:hidden"
+              className="flex h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-[3px] border border-ink/20 px-3 text-[1.0625rem] font-medium min-[375px]:px-3.5 xl:hidden"
               aria-expanded={mobile}
               aria-controls="mobile-menu"
               onClick={() => setMobile(true)}
@@ -181,7 +172,7 @@ export default function Header() {
               <svg aria-hidden viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7">
                 <path d="M3 6h14M3 10h14M3 14h14" strokeLinecap="round" />
               </svg>
-              Menu
+              <span className="max-[374px]:sr-only">Menu</span>
             </button>
           </div>
         </div>
@@ -249,7 +240,7 @@ function MobileMenu({ open, onClose, isActive }: { open: boolean; onClose: () =>
       )}
     >
       <div className="flex h-[76px] shrink-0 items-center justify-between border-b border-stone px-5 sm:px-8">
-        <Image src="/logo.webp" alt="" width={375} height={134} className="h-[50px] w-auto" />
+        <Brand size="sm" />
         <button ref={closeRef} type="button" onClick={onClose} className="flex h-11 items-center gap-2 rounded-[3px] border border-ink/20 px-3.5 text-[1.0625rem] font-medium">
           <svg aria-hidden viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7">
             <path d="M5 5l10 10M15 5L5 15" strokeLinecap="round" />

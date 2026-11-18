@@ -8,7 +8,7 @@ import { photos } from "@/lib/images";
 export const metadata: Metadata = {
   title: "About the college",
   description:
-    "The history, vision, mission and values of Jana Seva Sangh's Shri Ram College of Commerce, Bhandup West — founded in 2009 by the Jana Seva Sangh and affiliated to the University of Mumbai.",
+    "The history, vision, mission and values of Jana Seva Sangh's Shri Ram College of Commerce & Science, Bhandup West — founded in 2009 by the Jana Seva Sangh and affiliated to the University of Mumbai.",
   alternates: { canonical: "/about" },
 };
 
@@ -39,7 +39,7 @@ const values = [
 const leadership = ["President, Jana Seva Sangh", "Director", "Principal", "Vice Principal"];
 
 const institutions = [
-  "Shri Ram College of Commerce (Degree College), Bhandup",
+  "Shri Ram College of Commerce & Science (Degree College), Bhandup",
   "Kumari Kasturi Vidyalaya, Bhandup",
   "K.K.V. Junior College, Bhandup",
   "Bhandup N.T. High School and Junior College",
@@ -56,7 +56,7 @@ export default function AboutPage() {
       <PageHero
         crumbs={[{ label: "About" }]}
         title="About the college"
-        intro="Founded in 2009 by the Jana Seva Sangh, Shri Ram College of Commerce brings university education to students of Bhandup and the eastern suburbs of Mumbai."
+        intro="Founded in 2009 by the Jana Seva Sangh, Shri Ram College of Commerce & Science brings university education to students of Bhandup and the eastern suburbs of Mumbai."
         image={{ label: "College building", ...photos.exterior }}
       />
 

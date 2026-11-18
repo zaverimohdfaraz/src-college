@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import { site, formatPhone } from "@/lib/site";
 import { courses } from "@/lib/courses";
 import { Container } from "./ui";
+import { Brand } from "./Brand";
 
 const quick = [
   { label: "About the college", href: "/about" },
@@ -51,20 +51,18 @@ export default function Footer() {
 
       <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
         <div className="sm:col-span-2 lg:col-span-3">
-          <div className="inline-block rounded-[3px] bg-white p-3">
-            <Image src="/logo.webp" alt={`${site.name} logo`} width={375} height={134} className="h-[60px] w-auto" />
-          </div>
+          <Brand tone="dark" />
           <p className="mt-6 max-w-sm text-[1.0625rem] leading-relaxed">
             A degree college of the {site.trust}, affiliated to the {site.affiliation} and serving students of Bhandup
             and the surrounding neighbourhoods since {site.establishedYear}.
           </p>
           <address className="mt-6 space-y-1 text-[1.0625rem] not-italic">
             <p>{site.address.line1}, {site.address.city} {site.address.postalCode}</p>
-            <p className="flex flex-col items-start lg:block">
-              {site.phones.map((p, i) => (
+            <p className="flex flex-col items-start">
+              {site.phones.map((p) => (
                 <span key={p}>
                   <a href={`tel:+91${p}`} className="hover:text-white hover:underline inline-flex min-h-11 items-center lg:min-h-0">{formatPhone(p)}</a>
-                  {i < site.phones.length - 1 && <span aria-hidden className="mx-1.5 hidden text-white/30 lg:inline">/</span>}
+                  
                 </span>
               ))}
             </p>

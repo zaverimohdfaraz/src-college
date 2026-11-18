@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!c) return {};
   return {
     title: `${c.code} — ${c.name}`,
-    description: `${c.name} (${c.code}) at Shri Ram College of Commerce, Bhandup West, Mumbai. ${c.summary}`,
+    description: `${c.name} (${c.code}) at Shri Ram College of Commerce & Science, Bhandup West, Mumbai. ${c.summary}`,
     alternates: { canonical: `/courses/${c.slug}` },
     openGraph: { title: `${c.name} (${c.code})`, description: c.summary, url: `/courses/${c.slug}` },
   };
@@ -54,7 +54,7 @@ export default async function CoursePage({ params }: Props) {
 
       {/* Banner */}
       <header className="on-dark relative isolate overflow-hidden bg-ink text-white">
-        <Media label={`${c.code} programme banner`} src={bannerFor(c.department)} alt="" dark hideLabel className="absolute inset-0 -z-10 h-full w-full" />
+        <Media label={`${c.code} programme banner`} src={bannerFor(c.department)} alt="" dark hideLabel still className="absolute inset-0 -z-10 h-full w-full" />
         <div aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(26,24,27,0.92),rgba(26,24,27,0.55))]" />
         <Container className="pb-16 pt-10 lg:pb-24 lg:pt-14">
           <nav aria-label="Breadcrumb" className="mb-12">

@@ -8,7 +8,7 @@ import { departments } from "@/lib/departments";
 export const metadata: Metadata = {
   title: "Academics",
   description:
-    "Undergraduate and postgraduate programmes, departments and the approach to teaching at Shri Ram College of Commerce, Bhandup West, Mumbai.",
+    "Undergraduate and postgraduate programmes, departments and the approach to teaching at Shri Ram College of Commerce & Science, Bhandup West, Mumbai.",
   alternates: { canonical: "/academics" },
 };
 

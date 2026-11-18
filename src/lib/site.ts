@@ -7,12 +7,12 @@
  */
 
 export const site = {
-  name: "Jana Seva Sangh's Shri Ram College of Commerce",
-  shortName: "Shri Ram College of Commerce",
+  name: "Jana Seva Sangh's Shri Ram College of Commerce & Science",
+  shortName: "Shri Ram College of Commerce & Science",
   trust: "Jana Seva Sangh",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://sr-college.com",
   description:
-    "Jana Seva Sangh's Shri Ram College of Commerce, Bhandup West, Mumbai — an affiliated college of the University of Mumbai offering undergraduate and postgraduate programmes in commerce, management, arts and computing since 2009.",
+    "Jana Seva Sangh's Shri Ram College of Commerce & Science, Bhandup West, Mumbai — an affiliated college of the University of Mumbai offering undergraduate and postgraduate programmes in commerce, management, arts and computing since 2009.",
   established: "28 August 2009",
   establishedYear: 2009,
   affiliation: "University of Mumbai",

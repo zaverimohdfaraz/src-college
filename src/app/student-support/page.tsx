@@ -6,7 +6,7 @@ import { site, formatPhone } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Student support",
   description:
-    "Mentoring, scholarships, examinations, careers and placement, anti-ragging, grievance redressal and women's safety at Shri Ram College of Commerce, Bhandup.",
+    "Mentoring, scholarships, examinations, careers and placement, anti-ragging, grievance redressal and women's safety at Shri Ram College of Commerce & Science, Bhandup.",
   alternates: { canonical: "/student-support" },
 };
 

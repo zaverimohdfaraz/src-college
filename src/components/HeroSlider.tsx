@@ -70,7 +70,7 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
       }}
       className="on-dark relative isolate bg-ink text-white"
     >
-      <div className="relative h-[clamp(560px,82svh,820px)] overflow-hidden">
+      <div className="relative grid min-h-[clamp(560px,82svh,820px)] overflow-hidden">
         {slides.map((s, i) => {
           const active = i === index;
           return (
@@ -81,10 +81,10 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
               aria-label={`${i + 1} of ${slides.length}: ${s.rail}`}
               aria-hidden={!active}
               inert={!active}
-              className={cx("absolute inset-0 transition-opacity duration-[900ms] ease-out", active ? "z-10 opacity-100" : "z-0 opacity-0")}
+              className={cx("relative [grid-area:1/1] transition-opacity duration-[900ms] ease-out", active ? "z-10 opacity-100" : "z-0 opacity-0")}
             >
               <div className={cx("absolute inset-0", active && !reduced && "animate-[slow-zoom_8s_ease-out_both]")}>
-                <Media {...s.image} dark hideLabel priority={i === 0} sizes="100vw" className="h-full w-full" />
+                <Media {...s.image} dark hideLabel still priority={i === 0} sizes="100vw" className="h-full w-full" />
               </div>
               {!s.image.src && (
                 <span className="absolute right-4 top-4 z-10 hidden rounded-[2px] bg-black/40 px-2.5 py-1.5 text-[0.9375rem] font-medium text-white/80 lg:block">
@@ -92,9 +92,9 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
                 </span>
               )}
               {/* Legibility scrim */}
-              <div aria-hidden className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,24,27,0.82)_0%,rgba(26,24,27,0.55)_45%,rgba(26,24,27,0.1)_80%)] max-md:bg-[linear-gradient(0deg,rgba(26,24,27,0.9)_10%,rgba(26,24,27,0.45)_65%,rgba(26,24,27,0.25)_100%)]" />
+              <div aria-hidden className="absolute inset-0 bg-[linear-gradient(90deg,rgba(26,24,27,0.82)_0%,rgba(26,24,27,0.55)_45%,rgba(26,24,27,0.1)_80%)] max-md:bg-[linear-gradient(0deg,rgba(26,24,27,0.94)_0%,rgba(26,24,27,0.74)_55%,rgba(26,24,27,0.55)_100%)]" />
 
-              <div className="relative mx-auto flex h-full max-w-[1320px] items-end px-5 pb-36 sm:px-8 md:items-center md:pb-24 lg:px-12">
+              <div className="relative mx-auto flex h-full w-full max-w-[1320px] items-end px-5 pb-24 pt-16 sm:px-8 md:items-center md:pb-32 md:pt-20 lg:px-12 lg:pb-28">
                 <div key={active ? `on-${index}` : "off"} className="max-w-[40rem]">
                   <h2
                     className={cx("t-display text-white", active && !reduced && "animate-[hero-in_0.8s_var(--ease-out-quart)_both]")}
@@ -102,19 +102,19 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
                     {s.title}
                   </h2>
                   <p
-                    className={cx("mt-5 max-w-[34rem] text-[1.1875rem] leading-relaxed text-white/85 md:text-[1.3125rem]", active && !reduced && "animate-[hero-in_0.8s_0.12s_var(--ease-out-quart)_both]")}
+                    className={cx("mt-4 max-w-[34rem] text-[1.125rem] leading-relaxed text-white/90 md:mt-5 md:text-[1.3125rem]", active && !reduced && "animate-[hero-in_0.8s_0.12s_var(--ease-out-quart)_both]")}
                   >
                     {s.body}
                   </p>
                   {(s.primary || s.secondary) && (
-                    <div className={cx("mt-8 flex flex-wrap gap-3", active && !reduced && "animate-[hero-in_0.8s_0.22s_var(--ease-out-quart)_both]")}>
+                    <div className={cx("mt-7 flex flex-wrap gap-3 md:mt-8", active && !reduced && "animate-[hero-in_0.8s_0.22s_var(--ease-out-quart)_both]")}>
                       {s.primary && (
-                        <Link href={s.primary.href} className="inline-flex h-12 items-center gap-2 rounded-[3px] bg-red px-6 font-semibold text-white transition-colors hover:bg-maroon">
+                        <Link href={s.primary.href} className="inline-flex h-12 items-center gap-2 rounded-[3px] bg-red px-5 font-semibold sm:px-6 text-white transition-colors hover:bg-maroon">
                           {s.primary.label}
                         </Link>
                       )}
                       {s.secondary && (
-                        <Link href={s.secondary.href} className="inline-flex h-12 items-center gap-2 rounded-[3px] border border-white/45 px-6 font-semibold text-white transition-colors hover:bg-white hover:text-ink">
+                        <Link href={s.secondary.href} className="inline-flex h-12 items-center gap-2 rounded-[3px] border border-white/45 px-5 font-semibold sm:px-6 text-white transition-colors hover:bg-white hover:text-ink">
                           {s.secondary.label}
                         </Link>
                       )}

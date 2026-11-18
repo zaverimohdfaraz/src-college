@@ -31,7 +31,7 @@ const jsonLd = {
   name: site.name,
   alternateName: site.shortName,
   url: site.url,
-  logo: `${site.url}/logo.webp`,
+  logo: `${site.url}/emblem.webp`,
   foundingDate: "2009-08-28",
   email: site.email,
   telephone: site.phones.map((p) => `+91${p}`),

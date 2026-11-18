@@ -1,8 +1,8 @@
-# Shri Ram College of Commerce — website
+# Shri Ram College of Commerce & Science — website
 
-Institutional website for **Jana Seva Sangh's Shri Ram College of Commerce**, Datta Mandir Road, Bhandup West, Mumbai 400078.
+Institutional website for **Jana Seva Sangh's Shri Ram College of Commerce & Science**, Datta Mandir Road, Bhandup West, Mumbai 400078.
 
-Built with Next.js 16 (App Router, Turbopack), React 19, TypeScript and Tailwind CSS v4. Enquiry forms are emailed to the college with Nodemailer. Deploys to Vercel. No database is needed.
+Built with Next.js 15 (App Router), TypeScript and Tailwind CSS v4. Enquiry forms are emailed to the college with Nodemailer. Deploys to Vercel. No database is needed.
 
 ## Run locally
 

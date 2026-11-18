@@ -16,7 +16,7 @@ const deptPhoto: Record<string, { src: string; alt: string }> = {
 export const metadata: Metadata = {
   title: "Departments",
   description:
-    "The Departments of Commerce, Accounts, Information Technology, Arts and Mathematics at Shri Ram College of Commerce, Bhandup West.",
+    "The Departments of Commerce, Accounts, Information Technology, Arts and Mathematics at Shri Ram College of Commerce & Science, Bhandup West.",
   alternates: { canonical: "/departments" },
 };
 

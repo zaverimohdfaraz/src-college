@@ -10,7 +10,7 @@ import { photos } from "@/lib/images";
 export const metadata: Metadata = {
   title: "Admissions",
   description:
-    "How to enquire about admission to undergraduate and postgraduate programmes at Shri Ram College of Commerce, Bhandup West, Mumbai.",
+    "How to enquire about admission to undergraduate and postgraduate programmes at Shri Ram College of Commerce & Science, Bhandup West, Mumbai.",
   alternates: { canonical: "/admissions" },
 };
 

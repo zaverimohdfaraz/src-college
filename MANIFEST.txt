@@ -1,0 +1,50 @@
+SRCC website — update package 2 (18 Nov 2026)
+=============================================
+This package REPLACES the earlier srcc-website-update.zip and includes everything in it.
+Unzip over your srcc-website folder, overwrite when asked, then push and redeploy.
+No new packages, so no npm install is needed.
+
+WHAT CHANGED
+1. Logo: refined crest + college name as sharp text in header, mobile menu and footer
+   (public/emblem.webp, src/components/Brand.tsx). New favicon and phone home-screen icon.
+2. Name: "Shri Ram College of Commerce & Science" across the site, titles, emails and README.
+3. Homepage slider on phones: the slider now grows to fit its text, so the headline no longer
+   slides under the header on iPhones/Android. Slightly smaller headline and tighter spacing
+   on phones; stronger shading behind the text so it reads clearly over the photo.
+4. Design polish:
+   - Photos gently uncover as you scroll to them (CSS only, off for reduced-motion users).
+   - Photos zoom slightly on hover.
+   - "Why Shri Ram College" section now has a photo beside the heading.
+5. Header navigation fits on one line with the new logo; header fits 320px phones.
+   Footer phone numbers each on their own line.
+
+FILES IN THIS PACKAGE
+  README.md
+  public/emblem.webp
+  src/app/about/page.tsx
+  src/app/academics/page.tsx
+  src/app/admissions/page.tsx
+  src/app/apple-icon.png
+  src/app/campus-life/page.tsx
+  src/app/contact/page.tsx
+  src/app/courses/[slug]/page.tsx
+  src/app/courses/page.tsx
+  src/app/departments/page.tsx
+  src/app/facilities/page.tsx
+  src/app/favicon.ico
+  src/app/globals.css
+  src/app/icon.png
+  src/app/institutional-information/page.tsx
+  src/app/layout.tsx
+  src/app/notices/page.tsx
+  src/app/page.tsx
+  src/app/student-support/page.tsx
+  src/components/Brand.tsx
+  src/components/Footer.tsx
+  src/components/Header.tsx
+  src/components/HeroSlider.tsx
+  src/components/ui.tsx
+  src/lib/site.ts
+
+OPTIONAL CLEAN-UP
+- public/logo.webp is no longer used. You can delete it.

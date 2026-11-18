@@ -4,7 +4,7 @@ import { NoticeList } from "@/components/sections";
 
 export const metadata: Metadata = {
   title: "Notices",
-  description: "Official notices about admissions, examinations, scholarships and events at Shri Ram College of Commerce, Bhandup West.",
+  description: "Official notices about admissions, examinations, scholarships and events at Shri Ram College of Commerce & Science, Bhandup West.",
   alternates: { canonical: "/notices" },
 };
 

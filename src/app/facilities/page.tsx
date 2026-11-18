@@ -4,7 +4,7 @@ import { photos } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Facilities",
-  description: "Library, computer laboratory, gymnasium, classrooms and digital resources at Shri Ram College of Commerce, Bhandup West.",
+  description: "Library, computer laboratory, gymnasium, classrooms and digital resources at Shri Ram College of Commerce & Science, Bhandup West.",
   alternates: { canonical: "/facilities" },
 };
 

@@ -48,6 +48,7 @@ export function Media({
   sizes = "(min-width: 1024px) 50vw, 100vw",
   labelTop,
   hideLabel,
+  still,
 }: {
   src?: string;
   alt: string;
@@ -58,11 +59,23 @@ export function Media({
   sizes?: string;
   labelTop?: boolean;
   hideLabel?: boolean;
+  /** Turn off the scroll reveal (e.g. images that are on screen at load). */
+  still?: boolean;
 }) {
   if (src) {
     return (
-      <div className={cx("relative overflow-hidden bg-stone", className)}>
-        <Image src={src} alt={alt} fill sizes={sizes} preload={priority} className="object-cover" />
+      <div className={cx("group/media relative overflow-hidden bg-stone", className)}>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className={cx(
+            "object-cover transition-[scale] duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/media:scale-[1.04]",
+            !priority && !still && "media-reveal",
+          )}
+        />
       </div>
     );
   }
@@ -166,7 +179,7 @@ export function PageHero({
         </div>
         {image && (
           <div className="lg:col-span-5">
-            <Media {...image} dark className="aspect-[4/3] w-full ring-1 ring-white/10" priority sizes="(min-width:1024px) 40vw, 100vw" />
+            <Media {...image} dark still className="aspect-[4/3] w-full ring-1 ring-white/10" priority sizes="(min-width:1024px) 40vw, 100vw" />
           </div>
         )}
       </Container>

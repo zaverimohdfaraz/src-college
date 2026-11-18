@@ -19,7 +19,7 @@ const slides: Slide[] = [
     id: "welcome",
     rail: "Welcome",
     title: "A degree college for Bhandup, since 2009",
-    body: "Jana Seva Sangh's Shri Ram College of Commerce offers undergraduate and postgraduate study in commerce, management, arts and computing, affiliated to the University of Mumbai.",
+    body: "Jana Seva Sangh's Shri Ram College of Commerce & Science offers undergraduate and postgraduate study in commerce, management, arts and computing, affiliated to the University of Mumbai.",
     image: { label: "Main college building, exterior", ...photos.exterior },
     primary: { label: "Explore programmes", href: "/courses" },
     secondary: { label: "Enquire now", href: "/admissions#enquire" },
@@ -128,7 +128,7 @@ export default function Home() {
           <div className="lg:col-span-6 lg:col-start-7 lg:pt-14">
             <div className="prose-college t-lead !text-ink-soft">
               <p>
-                Jana Seva Sangh&apos;s Shri Ram College of Commerce was founded on 28 August 2009 by the Jana Seva Sangh, a
+                Jana Seva Sangh&apos;s Shri Ram College of Commerce & Science was founded on 28 August 2009 by the Jana Seva Sangh, a
                 charitable trust that has served the people of Mumbai through schools, colleges and welfare work for
                 decades.
               </p>
@@ -236,6 +236,10 @@ export default function Home() {
                 title="A college that knows its students by name"
                 intro="Small mentoring groups, practical teaching and a strong sense of community shape the experience here."
               />
+              <figure className="mt-10 hidden lg:block">
+                <Media label="Teacher in the computer laboratory" {...photos.labTeaching} sizes="(min-width:1024px) 30vw, 100vw" className="aspect-[4/3] w-full" />
+                <figcaption className="t-caption mt-3">Guidance at every desk: a lab session in progress</figcaption>
+              </figure>
             </div>
           </div>
           <ul className="grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:col-span-7 lg:col-start-6">
