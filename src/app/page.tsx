@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import HeroSlider, { type Slide } from "@/components/HeroSlider";
 import VideoBlock from "@/components/VideoBlock";
@@ -7,7 +8,7 @@ import { NoticeList, MapEmbed, ContactLines, AdmissionBand } from "@/components/
 import { QuickTiles, StatsBand, CampusLifeHighlights } from "@/components/home-bands";
 import { coursesByLevel, type Course } from "@/lib/courses";
 import { site, formatPhone } from "@/lib/site";
-import { photos } from "@/lib/images";
+import { photos, videos } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: { absolute: `${site.name} | Bhandup West, Mumbai` },
@@ -39,7 +40,7 @@ const slides: Slide[] = [
     title: "Higher education within reach of every student",
     body: "Our mission is affordable education with equal access, regardless of gender, caste, class or religion — and a first step for many first-generation graduates.",
     image: { label: "Bhandup station", ...photos.station },
-    primary: { label: "Our vision and mission", href: "/about#vision-mission" },
+    primary: { label: "Our vision and mission", href: "/about/vision-mission" },
   },
   {
     id: "life",
@@ -80,16 +81,24 @@ const reasons = [
 
 function ProgrammeRow({ c, compact }: { c: Course; compact?: boolean }) {
   return (
-    <li className={`group grid grid-cols-[1fr_auto] gap-x-6 gap-y-2 py-6 ${compact ? "" : "md:grid-cols-[9rem_1fr_auto] md:items-baseline"}`}>
-      <p className="font-serif text-[1.625rem] font-medium leading-none text-maroon md:text-[1.75rem]">{c.code}</p>
-      <div className={`col-span-2 ${compact ? "" : "md:col-span-1"}`}>
-        <h4 className="text-[1.1875rem] font-semibold text-ink">
+    <li className={`group grid grid-cols-[7.5rem_1fr] items-start gap-x-5 gap-y-3 py-6 sm:grid-cols-[10rem_1fr] ${compact ? "lg:grid-cols-[8.5rem_1fr]" : "md:grid-cols-[11rem_1fr_auto] md:gap-x-6"}`}>
+      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[3px] bg-ink">
+        <Image
+          src={`/images/courses/${c.slug}.webp`}
+          alt={`${c.code}: ${c.name}`}
+          fill
+          sizes="(min-width:768px) 11rem, 10rem"
+          className="object-cover transition-[scale] duration-700 group-hover:scale-[1.05]"
+        />
+      </div>
+      <div>
+        <p className="font-serif text-[1.25rem] font-medium leading-none text-maroon">{c.code}</p>
+        <h4 className="mt-1.5 text-[1.125rem] font-semibold leading-snug text-ink">
           <Link href={`/courses/${c.slug}`} className="after:absolute after:inset-0 hover:text-maroon">
             {c.name}
           </Link>
         </h4>
-        <p className="mt-1 max-w-[52ch] text-[1.0625rem] text-ink-soft">{c.summary}</p>
-        <p className="mt-2 text-[0.9375rem] font-medium text-muted">{c.category}</p>
+        <p className="mt-1 hidden max-w-[52ch] text-[1.0625rem] text-ink-soft sm:block">{c.summary}</p>
       </div>
       <div className={`relative z-10 col-span-2 flex items-center gap-5 ${compact ? "" : "md:col-span-1 md:flex-col md:items-end md:gap-2"}`}>
         <Link href={`/courses/${c.slug}`} className="inline-flex items-center gap-1.5 text-[1.0625rem] font-semibold text-maroon">
@@ -302,13 +311,16 @@ export default function Home() {
         <Container>
           <SectionHeading id="video" kicker="See the college" title="Take a look around" />
           <div className="mt-12 grid gap-10 lg:grid-cols-12">
-            <VideoBlock className="lg:col-span-8" title="An introduction to the college" caption="A short film about the college, its campus and its students." />
+            <VideoBlock className="lg:col-span-8" {...videos.tour} />
             <div className="flex flex-col justify-between gap-10 lg:col-span-4">
               <p className="t-lead">
-                Films of the campus and student activities will appear here once the college supplies them, so visitors
-                can see the classrooms, library and events for themselves.
+                See the classrooms, laboratories, library and sports area, and students at work in add-on courses and
+                skills training.
               </p>
-              <VideoBlock title="Student activities" caption="Highlights from cultural events, sport and community service." />
+              <VideoBlock {...videos.addOn} />
+              <Link href="/campus-life/gallery" className="inline-flex items-center gap-2 font-semibold text-maroon">
+                <span className="link-u">More photos and videos</span><Arrow />
+              </Link>
             </div>
           </div>
         </Container>
@@ -330,10 +342,10 @@ export default function Home() {
               <h3 className="t-h3 text-red">Student essentials</h3>
               <ul className="mt-5 divide-y divide-red/15">
                 {[
-                  { t: "Apply for scholarships and freeships", d: "Government of Maharashtra MahaDBT and the National Scholarship Portal", h: "/student-support#scholarships" },
-                  { t: "Examinations and results", d: "Timetables, hall tickets and University of Mumbai results", h: "/student-support#examinations" },
-                  { t: "Report ragging", d: "Anti-Ragging Cell and the 24-hour helpline 1800-180-5522", h: "/student-support#anti-ragging" },
-                  { t: "Raise a grievance", d: "The college grievance committee and UGC e-Samadhan", h: "/student-support#grievance" },
+                  { t: "Apply for scholarships and freeships", d: "Government of Maharashtra MahaDBT and the National Scholarship Portal", h: "/student-support/scholarships" },
+                  { t: "Examinations and results", d: "Timetables, hall tickets and University of Mumbai results", h: "/student-support/examinations" },
+                  { t: "Report ragging", d: "Anti-Ragging Cell and the 24-hour helpline 1800-180-5522", h: "/student-support/anti-ragging" },
+                  { t: "Raise a grievance", d: "The college grievance committee and UGC e-Samadhan", h: "/student-support/grievance-redressal" },
                 ].map((i) => (
                   <li key={i.h}>
                     <Link href={i.h} className="group flex items-start justify-between gap-6 py-4">

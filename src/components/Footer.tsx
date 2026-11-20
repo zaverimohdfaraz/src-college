@@ -116,13 +116,13 @@ export default function Footer() {
           <p>© {year} {site.name}. All rights reserved.</p>
           <ul className="flex flex-wrap gap-x-6 lg:gap-y-2">
             <li><Link href="/privacy-policy" className="hover:text-white hover:underline inline-flex min-h-11 items-center lg:min-h-0">Privacy policy</Link></li>
-            <li><Link href="/institutional-information#disclosures" className="hover:text-white hover:underline inline-flex min-h-11 items-center lg:min-h-0">Mandatory disclosures</Link></li>
-            <li><Link href="/student-support#grievance" className="hover:text-white hover:underline inline-flex min-h-11 items-center lg:min-h-0">Grievance redressal</Link></li>
+            <li><Link href="/institutional-information/mandatory-disclosures" className="hover:text-white hover:underline inline-flex min-h-11 items-center lg:min-h-0">Mandatory disclosures</Link></li>
+            <li><Link href="/student-support/grievance-redressal" className="hover:text-white hover:underline inline-flex min-h-11 items-center lg:min-h-0">Grievance redressal</Link></li>
             <li><a href={site.directionsUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline inline-flex min-h-11 items-center lg:min-h-0">Directions</a></li>
           </ul>
         </Container>
       </div>
-       <div className="border-t border-white/10 bg-black/25">
+      <div className="border-t border-white/10 bg-black/25">
         <Container className="flex min-h-14 items-center justify-center py-3 text-center text-[1rem] text-white/70">
           <p>
             Designed and developed by{" "}

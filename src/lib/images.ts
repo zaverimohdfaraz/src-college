@@ -37,4 +37,14 @@ export const photos = {
   nss2: p("nss-plantation-2", "An NSS volunteer carrying saplings at a plantation drive"),
   ivGroup: p("industrial-visit-group", "Students on an industrial visit in Bhandup West"),
   ivDemo: p("industrial-visit-demo", "Students watching a machine demonstration during an industrial visit", "50% 80%"),
+  // Stills from the college's promotional video (Nov 2026)
+  firstAid: p("first-aid-training", "Students practising first aid during a skills training session"),
+  placementCell: p("placement-cell", "A student at the college's Placement Cell"),
+} as const;
+
+/** Clips cut from the college's promotional video. Posters are stills from the same clips. */
+export const videos = {
+  tour: { mp4: "/videos/campus-tour.mp4", poster: "/videos/campus-tour.webp", title: "A look around the college", caption: "Classrooms, laboratories, the library, sport and student activities at the college. 48 seconds." },
+  addOn: { mp4: "/videos/add-on-courses.mp4", poster: "/videos/add-on-courses.webp", title: "Add-on courses and skills training", caption: "Add-on course sessions, first-aid practice and computer training. 41 seconds." },
+  facilities: { mp4: "/videos/facilities.mp4", poster: "/videos/facilities.webp", title: "Facilities at the college", caption: "The library, classrooms, sports area, laboratories, hall and gymnasium. 28 seconds, no sound." },
 } as const;

@@ -38,10 +38,9 @@ export type Result =
   | { status: 400 | 413 | 415 | 422 | 429 | 503 | 500; body: { ok: false; message: string; errors?: Record<string, string> } };
 
 const success: Record<FormType, string> = {
-  contact: "Your message has been sent. The college office will reply by email or phone.",
+  contact: "Your enquiry has been sent. The college office will contact you by phone or email.",
   admission: "Your admission enquiry has been sent. The admissions office will contact you with guidance.",
   course: "Your course enquiry has been sent. The college office will contact you about this programme.",
-  visit: "Your visit request has been sent. The college office will contact you to confirm a time.",
 };
 
 export async function handleEnquiry(type: FormType, req: Request): Promise<Result> {
@@ -90,7 +89,7 @@ export async function handleEnquiry(type: FormType, req: Request): Promise<Resul
 
   const values = parsed.data as Record<string, unknown>;
   const fingerprint = createHash("sha256")
-    .update(JSON.stringify([type, values.email, values.phone, values.message ?? "", values.programme ?? values.course ?? values.subject ?? values.preferredDate ?? ""]))
+    .update(JSON.stringify([type, values.email, values.phone, values.course]))
     .digest("hex");
 
   if (isDuplicate(fingerprint)) {

@@ -38,18 +38,24 @@ Never commit `.env*` files; only `.env.example` is tracked.
 
 ## Enquiry forms
 
-All four forms post JSON to `/api/enquiries/{type}`. Each submission is emailed to `ENQUIRY_TO`:
+Every enquiry form asks for exactly four things: **full name, email, mobile number and course**.
+They post JSON to `/api/enquiries/{type}` and each submission is emailed to `ENQUIRY_TO`:
 
 | Form | Where | Email subject starts with |
 |---|---|---|
-| `contact` | Contact page | Website message |
+| `contact` | Contact page | Website enquiry |
 | `admission` | Admissions page (`/admissions#enquire`) | Admission enquiry |
 | `course` | Every course page (`/courses/[slug]#enquire`) | Course enquiry |
-| `visit` | Contact page, "Plan a campus visit" tab (`/contact?form=visit`) | Campus visit request |
 
-The email's **Reply-To** is the enquirer, so the office can simply press Reply. If `SEND_AUTO_REPLY` is on, the enquirer also gets a short acknowledgement (a failed acknowledgement never fails the enquiry).
+Rules (shared by browser and server, in `src/lib/validation.ts`):
 
-Protection built in: shared Zod validation on client and server, input sanitising and HTML-escaping in emails, phone/email normalisation, a 10 KB body limit, a honeypot field, a minimum fill time, per-IP rate limiting, duplicate suppression (same enquiry within 10 minutes), and generic error messages (SMTP errors are only logged server-side).
+- **Name**: 3–60 characters; letters in any script, single spaces, dots, apostrophes, hyphens; no digits, symbols or "aaaa"-style mashing. Disallowed characters are removed as the person types.
+- **Email**: strict format, max 100 characters, lower-cased; temporary inboxes (mailinator, yopmail…) refused; common typos (gmial.com, gmail.co…) caught with a "Did you mean…" hint.
+- **Mobile**: Indian mobile only, exactly 10 digits starting 6–9 (+91 / 0 prefix accepted and removed); obvious fakes like 9999999999 refused. Letters cannot be typed.
+- **Course**: must be one of the listed courses.
+- Any other field sent to the server is rejected.
+
+Also: 10 KB body limit, honeypot field, minimum fill time, per-IP rate limiting, duplicate suppression (same enquiry within 10 minutes), HTML-escaping in emails, and generic error messages (SMTP errors are only logged server-side). The email's **Reply-To** is the enquirer.
 
 There is intentionally **no database and no admin panel**: the college's inbox is the record of enquiries.
 

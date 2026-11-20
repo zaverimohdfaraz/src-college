@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Container, Media, Pending, Arrow } from "@/components/ui";
+import { Container, Media, Arrow } from "@/components/ui";
 import EnquiryForm from "@/components/EnquiryForm";
 import { courses, getCourse } from "@/lib/courses";
 import { getDepartment } from "@/lib/departments";
 import { site, formatPhone } from "@/lib/site";
-import { photos } from "@/lib/images";
 
-const bannerFor = (dept: string) =>
-  dept === "information-technology" ? photos.labStudents.src : dept === "accounts" ? photos.lecture.src : photos.classroomStudents.src;
+const courseBanner = (slug: string) => `/images/courses/${slug}.webp`;
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -26,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${c.code} — ${c.name}`,
     description: `${c.name} (${c.code}) at Shri Ram College of Commerce & Science, Bhandup West, Mumbai. ${c.summary}`,
     alternates: { canonical: `/courses/${c.slug}` },
-    openGraph: { title: `${c.name} (${c.code})`, description: c.summary, url: `/courses/${c.slug}` },
+    openGraph: { title: `${c.name} (${c.code})`, description: c.summary, url: `/courses/${c.slug}`, images: [{ url: `/images/courses/${c.slug}.webp`, width: 1600, height: 900 }] },
   };
 }
 
@@ -54,8 +52,7 @@ export default async function CoursePage({ params }: Props) {
 
       {/* Banner */}
       <header className="on-dark relative isolate overflow-hidden bg-ink text-white">
-        <Media label={`${c.code} programme banner`} src={bannerFor(c.department)} alt="" dark hideLabel still className="absolute inset-0 -z-10 h-full w-full" />
-        <div aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(26,24,27,0.92),rgba(26,24,27,0.55))]" />
+        <div aria-hidden className="hatch-dark absolute inset-0 -z-10 opacity-90" />
         <Container className="pb-16 pt-10 lg:pb-24 lg:pt-14">
           <nav aria-label="Breadcrumb" className="mb-12">
             <ol className="flex flex-wrap items-center gap-2 text-[1rem] text-white/65">
@@ -66,7 +63,12 @@ export default async function CoursePage({ params }: Props) {
               <li aria-current="page" className="text-white">{c.code}</li>
             </ol>
           </nav>
-          <p className="font-serif text-[clamp(3rem,2rem+5vw,6.5rem)] leading-[0.95] text-white/90">{c.code}</p>
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-center lg:gap-14">
+          <div className="lg:col-span-6">
+          <p className="inline-flex items-center gap-3 text-[1.0625rem] font-semibold text-white/80">
+            <span aria-hidden className="h-[3px] w-8 bg-red-bright" />
+            {c.code} · {c.level}
+          </p>
           <h1 className="t-h1 mt-5 max-w-[22ch] text-white">{c.name}</h1>
           <p className="mt-6 max-w-2xl text-[1.25rem] leading-relaxed text-white/80">{c.summary}</p>
           <div className="mt-9 flex flex-wrap gap-3">
@@ -76,6 +78,18 @@ export default async function CoursePage({ params }: Props) {
             <a href="#overview" className="inline-flex h-12 items-center rounded-[3px] border border-white/45 px-6 font-semibold text-white transition-colors hover:bg-white hover:text-ink">
               Read the overview
             </a>
+          </div>
+          </div>
+          <figure className="lg:col-span-6">
+            <Media
+              label={`${c.code} banner`}
+              src={courseBanner(c.slug)}
+              alt={`${c.code} — ${c.name}`}
+              priority
+              sizes="(min-width:1024px) 45vw, 100vw"
+              className="aspect-[16/9] w-full shadow-[0_30px_70px_-25px_rgba(0,0,0,0.75)] ring-1 ring-white/10"
+            />
+          </figure>
           </div>
         </Container>
         <div aria-hidden className="h-1 bg-red" />
@@ -146,15 +160,18 @@ export default async function CoursePage({ params }: Props) {
                 {dept && (
                   <div>
                     <dt className="font-semibold text-red">Department</dt>
-                    <dd className="mt-0.5"><Link href={`/departments#${dept.slug}`} className="link-u font-medium text-maroon">{dept.name}</Link></dd>
+                    <dd className="mt-0.5"><Link href={`/departments/${dept.slug}`} className="link-u font-medium text-maroon">{dept.name}</Link></dd>
                   </div>
                 )}
                 <div><dt className="font-semibold text-red">Offered through</dt><dd className="mt-0.5 font-medium text-ink">{c.offeredThrough}</dd></div>
+                <div><dt className="font-semibold text-red">Duration</dt><dd className="mt-0.5 font-medium text-ink">{c.level === "Undergraduate" ? "Three years (six semesters)" : "Two years (four semesters)"}</dd></div>
+                <div><dt className="font-semibold text-red">Eligibility</dt><dd className="mt-0.5 font-medium text-ink">{c.level === "Undergraduate" ? "Std. XII (HSC) or an equivalent examination" : "A bachelor's degree in a relevant subject"}</dd></div>
                 <div><dt className="font-semibold text-red">Mode</dt><dd className="mt-0.5 font-medium text-ink">{distance ? "Open and distance learning" : "Regular, on campus"}</dd></div>
               </dl>
-              <Pending className="mt-6 !bg-white text-[1rem]">
-                Duration, eligibility, intake and fees are confirmed by the college office for each academic year.
-              </Pending>
+<p className="mt-6 border-t border-stone pt-5 text-[1rem] text-muted">
+                Fees and intake are set for each academic year. The college office will share the current details when
+                you enquire.
+              </p>
             </div>
           </div>
         </aside>

@@ -6,6 +6,10 @@
  * before launch. See CONTENT-CHECKLIST.md at the project root.
  */
 
+import { coursesByLevel } from "@/lib/courses";
+import { navLinks } from "@/lib/sections";
+import { photos, type Photo } from "@/lib/images";
+
 export const site = {
   name: "Jana Seva Sangh's Shri Ram College of Commerce & Science",
   shortName: "Shri Ram College of Commerce & Science",
@@ -48,105 +52,83 @@ export type NavGroup = {
   label: string;
   href: string;
   intro?: string;
-  columns?: { heading: string; links: NavLink[] }[];
+  /** Photo shown in the desktop dropdown. */
+  image?: Photo;
+  /** `wide` columns take double width and list their links in two columns (desktop dropdown). */
+  columns?: { heading: string; links: NavLink[]; wide?: boolean }[];
 };
+
+/** "Bachelor of Commerce in Banking and Insurance" -> "Banking and Insurance", for compact menus. */
+const subject = (name: string) => name.replace(/^(Bachelor|Master) of (Science in |Commerce in )?/, "");
 
 export const navigation: NavGroup[] = [
   {
     label: "About",
     href: "/about",
     intro: "A degree college of the Jana Seva Sangh, serving Bhandup and its neighbourhoods since 2009.",
+    image: photos.front,
     columns: [
-      {
-        heading: "The college",
-        links: [
-          { label: "About the college", href: "/about" },
-          { label: "History", href: "/about#history" },
-          { label: "Vision and mission", href: "/about#vision-mission" },
-          { label: "Leadership", href: "/about#leadership" },
-        ],
-      },
-      {
-        heading: "The trust",
-        links: [
-          { label: "Jana Seva Sangh", href: "/about#trust" },
-          { label: "Our values", href: "/about#values" },
-        ],
-      },
+      { heading: "The college", links: navLinks("about", "The college", true) },
+      { heading: "The trust", links: navLinks("about", "The trust", true) },
     ],
   },
   {
     label: "Academics",
     href: "/academics",
     intro: "Undergraduate and postgraduate study in commerce, management, arts and computing.",
+    image: photos.lecture,
     columns: [
       {
         heading: "Study",
-        links: [
-          { label: "Academics overview", href: "/academics" },
-          { label: "All programmes", href: "/courses" },
-          { label: "Departments", href: "/departments" },
-        ],
+        links: [...navLinks("academics", "Study"), { label: "All programmes", href: "/courses" }, { label: "Departments", href: "/departments" }],
       },
       {
-        heading: "Popular programmes",
+        heading: "Undergraduate",
+        wide: true,
+        links: coursesByLevel("Undergraduate").map((c) => ({ label: c.code, href: `/courses/${c.slug}`, description: subject(c.name) })),
+      },
+      {
+        heading: "Postgraduate",
+        links: coursesByLevel("Postgraduate").map((c) => ({ label: c.code, href: `/courses/${c.slug}`, description: subject(c.name) })),
+      },
+    ],
+  },
+  {
+    label: "Admissions",
+    href: "/admissions",
+    intro: "How to apply, who can apply, and answers to common questions.",
+    image: photos.office,
+    columns: [
+      { heading: "Admissions", links: navLinks("admissions", undefined, true) },
+      {
+        heading: "Get in touch",
         links: [
-          { label: "B.Com.", href: "/courses/bcom" },
-          { label: "B.M.S.", href: "/courses/bms" },
-          { label: "B.Sc. I.T.", href: "/courses/bsc-it" },
-          { label: "M.Com. Advanced Accountancy", href: "/courses/mcom-advanced-accountancy" },
+          { label: "Admission enquiry", href: "/admissions#enquire", description: "Tell us which programme interests you." },
+          { label: "Scholarships and freeships", href: "/student-support/scholarships", description: "Government schemes and trust scholarships." },
+          { label: "Contact the college", href: "/contact", description: "Phone, email, address and directions." },
         ],
       },
     ],
   },
-  { label: "Admissions", href: "/admissions" },
   {
     label: "Campus Life",
     href: "/campus-life",
     intro: "Learning that continues beyond the classroom.",
+    image: photos.cultural,
     columns: [
-      {
-        heading: "On campus",
-        links: [
-          { label: "Student life", href: "/campus-life" },
-          { label: "Facilities", href: "/facilities" },
-          { label: "Plan a campus visit", href: "/contact?form=visit#forms" },
-        ],
-      },
-      {
-        heading: "Support",
-        links: [
-          { label: "Student support", href: "/student-support" },
-          { label: "Scholarships", href: "/student-support#scholarships" },
-          { label: "Careers and placement", href: "/student-support#careers" },
-          { label: "Examinations", href: "/student-support#examinations" },
-        ],
-      },
+      { heading: "Student life", links: navLinks("campusLife") },
+      { heading: "Facilities", links: navLinks("facilities") },
+      { heading: "Support", links: navLinks("support", "Support") },
     ],
   },
   {
     label: "Institutional Information",
     href: "/institutional-information",
     intro: "Committees, quality assurance and institutional documents.",
+    image: photos.exterior,
     columns: [
-      {
-        heading: "Governance",
-        links: [
-          { label: "Overview", href: "/institutional-information" },
-          { label: "Committees and cells", href: "/institutional-information#committees" },
-          { label: "Quality assurance", href: "/institutional-information#quality" },
-          { label: "Alumni", href: "/institutional-information#alumni" },
-        ],
-      },
-      {
-        heading: "Rights and safety",
-        links: [
-          { label: "Anti-ragging", href: "/student-support#anti-ragging" },
-          { label: "Grievance redressal", href: "/student-support#grievance" },
-          { label: "Women's safety and ICC", href: "/student-support#wdc" },
-          { label: "Mandatory disclosures", href: "/institutional-information#disclosures" },
-        ],
-      },
+      { heading: "Governance", links: navLinks("institutional", undefined, true) },
+      { heading: "Rights and safety", links: navLinks("support", "Rights and safety", true) },
     ],
   },
   { label: "Contact", href: "/contact" },

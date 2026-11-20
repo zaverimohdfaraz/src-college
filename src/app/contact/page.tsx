@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Container, PageHero, ButtonLink } from "@/components/ui";
 import { MapEmbed, ContactLines } from "@/components/sections";
-import ContactForms from "@/components/ContactForms";
+import EnquiryForm from "@/components/EnquiryForm";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -46,15 +46,14 @@ export default function ContactPage() {
       <section id="forms" aria-labelledby="h-forms" className="border-t border-stone bg-ivory py-16 lg:py-24">
         <Container className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <h2 id="h-forms" className="t-h2">Write to us</h2>
+            <h2 id="h-forms" className="t-h2">Send an enquiry</h2>
             <p className="mt-5 text-ink-soft">
-              For general questions, send a message. For questions about a specific programme or admission, the{" "}
-              <a href="/admissions#enquire" className="link-u text-ink">admission enquiry form</a> reaches the admissions
-              office directly.
+              Leave your name, email, mobile number and the course you are interested in. The college office will
+              contact you.
             </p>
           </div>
           <div className="border border-stone bg-white p-6 sm:p-9 lg:col-span-7 lg:col-start-6">
-            <ContactForms />
+            <EnquiryForm type="contact" />
           </div>
         </Container>
       </section>

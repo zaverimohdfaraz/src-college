@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import type { Course } from "@/lib/courses";
 import { Arrow, cx } from "./ui";
@@ -76,10 +77,15 @@ export default function CourseFinder({ courses }: { courses: Course[] }) {
       ) : (
         <ul className="mt-4 divide-y divide-stone border-y border-stone">
           {list.map((c) => (
-            <li key={c.slug} className="group relative grid gap-3 py-8 md:grid-cols-[10rem_1fr_13rem] md:gap-8">
-              <div>
-                <p className="font-serif text-[1.875rem] leading-none text-maroon">{c.code}</p>
-                <p className="mt-2 text-[1rem] text-muted">{c.level}</p>
+            <li key={c.slug} className="group relative grid gap-5 py-8 md:grid-cols-[15rem_1fr_11rem] md:gap-8">
+              <div className="relative aspect-[16/9] w-full max-w-[24rem] overflow-hidden rounded-[3px] bg-ink">
+                <Image
+                  src={`/images/courses/${c.slug}.webp`}
+                  alt={`${c.code} — ${c.name}`}
+                  fill
+                  sizes="(min-width:768px) 15rem, 24rem"
+                  className="object-cover transition-[scale] duration-700 group-hover:scale-[1.04]"
+                />
               </div>
               <div>
                 <h2 className="t-h3">

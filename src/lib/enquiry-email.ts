@@ -1,48 +1,27 @@
 import "server-only";
 import { courses } from "./courses";
 import { site, formatPhone } from "./site";
-import { qualificationOptions, type FormType } from "./validation";
+import type { FormType } from "./validation";
 import { escapeHtml } from "./mailer";
 
 const formTitle: Record<FormType, string> = {
-  contact: "Website message",
+  contact: "Website enquiry",
   admission: "Admission enquiry",
   course: "Course enquiry",
-  visit: "Campus visit request",
 };
 
 const fieldLabels: Record<string, string> = {
   fullName: "Name",
-  studentName: "Student name",
-  guardianName: "Parent or guardian",
-  visitorName: "Visitor name",
   email: "Email",
-  phone: "Phone",
-  subject: "Subject",
-  programme: "Programme",
-  course: "Programme",
-  qualification: "Current education",
-  preferredDate: "Preferred visit date",
-  visitors: "Number of visitors",
-  message: "Message",
+  phone: "Mobile",
+  course: "Course",
 };
 
 const programmeName = (slug: unknown) =>
-  slug === "undecided" ? "Not decided yet" : courses.find((c) => c.slug === slug)?.name ?? String(slug);
-
-const qualificationName = (v: unknown) => qualificationOptions.find((o) => o.value === v)?.label ?? String(v);
-
-const formatDate = (v: unknown) => {
-  const d = new Date(`${String(v)}T00:00:00+05:30`);
-  return isNaN(d.getTime())
-    ? String(v)
-    : d.toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kolkata" });
-};
+  courses.find((c) => c.slug === slug)?.name ?? String(slug);
 
 function display(key: string, value: unknown) {
-  if (key === "programme" || key === "course") return programmeName(value);
-  if (key === "qualification") return qualificationName(value);
-  if (key === "preferredDate") return formatDate(value);
+  if (key === "course") return programmeName(value);
   if (key === "phone") return formatPhone(String(value));
   return String(value ?? "");
 }
@@ -53,7 +32,7 @@ function rows(values: Record<string, unknown>) {
     .map((k) => ({ key: k, label: fieldLabels[k], value: display(k, values[k]) }));
 }
 
-const personName = (v: Record<string, unknown>) => String(v.fullName ?? v.studentName ?? v.visitorName ?? "");
+const personName = (v: Record<string, unknown>) => String(v.fullName ?? "");
 
 const RED = "#cc2b20";
 
@@ -74,12 +53,7 @@ ${escapeHtml(site.address.line1)}, Mumbai ${escapeHtml(site.address.postalCode)}
 export function buildEnquiryEmail(type: FormType, values: Record<string, unknown>) {
   const list = rows(values);
   const who = personName(values);
-  const what =
-    type === "contact"
-      ? String(values.subject)
-      : type === "visit"
-        ? formatDate(values.preferredDate)
-        : programmeName(values.programme ?? values.course);
+  const what = programmeName(values.course);
   const subject = `${formTitle[type]}: ${who} — ${what}`.slice(0, 180);
   const received = new Date().toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Kolkata" });
 
@@ -119,11 +93,10 @@ export function buildEnquiryEmail(type: FormType, values: Record<string, unknown
 export function buildAutoReply(type: FormType, values: Record<string, unknown>) {
   const who = personName(values).split(" ")[0];
   const next: Record<FormType, string> = {
-    contact: "The college office will read your message and reply by email or phone.",
+    contact: "The college office will contact you with details about the course.",
     admission:
       "The admissions office will contact you with guidance on eligibility, documents and the admission schedule. This acknowledgement does not confirm admission.",
     course: "The college office will contact you with details about this programme.",
-    visit: "The college office will contact you to confirm a convenient time for your visit.",
   };
   const phones = site.phones.map(formatPhone).join(", ");
   const subject = `We have received your ${formTitle[type].toLowerCase()} — ${site.shortName}`;

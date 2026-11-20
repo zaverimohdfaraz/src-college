@@ -1,72 +1,40 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { schemas, fieldErrors, qualificationOptions, type FormType } from "@/lib/validation";
+import { schemas, fieldErrors, type FormType } from "@/lib/validation";
 import { courseOptions } from "@/lib/courses";
 import { cx } from "./ui";
 
 type Field = {
-  name: string;
+  name: "fullName" | "email" | "phone" | "course";
   label: string;
-  type: "text" | "email" | "tel" | "select" | "textarea" | "date" | "number";
-  required?: boolean;
-  options?: { value: string; label: string }[];
+  type: "text" | "email" | "tel" | "select";
   autoComplete?: string;
-  hint?: string;
-  half?: boolean;
   placeholder?: string;
+  hint?: string;
+  maxLength?: number;
+  half?: boolean;
 };
 
-const programmeOptions = [...courseOptions, { value: "undecided", label: "Not decided yet" }];
+const fields: Field[] = [
+  { name: "fullName", label: "Full name", type: "text", autoComplete: "name", placeholder: "e.g. Priya Sharma", maxLength: 60 },
+  { name: "email", label: "Email", type: "email", autoComplete: "email", placeholder: "name@gmail.com", maxLength: 100, half: true },
+  { name: "phone", label: "Mobile number", type: "tel", autoComplete: "tel-national", placeholder: "98200 12345", hint: "10 digits", maxLength: 14, half: true },
+  { name: "course", label: "Course", type: "select" },
+];
 
-const definitions: Record<FormType, { fields: Field[]; submit: string; sending: string }> = {
-  contact: {
-    submit: "Send message",
-    sending: "Sending message…",
-    fields: [
-      { name: "fullName", label: "Full name", type: "text", required: true, autoComplete: "name" },
-      { name: "email", label: "Email", type: "email", required: true, autoComplete: "email", half: true },
-      { name: "phone", label: "Phone number", type: "tel", required: true, autoComplete: "tel", half: true },
-      { name: "subject", label: "Subject", type: "text", required: true },
-      { name: "message", label: "Message", type: "textarea", required: true },
-    ],
-  },
-  admission: {
-    submit: "Send admission enquiry",
-    sending: "Sending enquiry…",
-    fields: [
-      { name: "studentName", label: "Student name", type: "text", required: true, autoComplete: "name", half: true },
-      { name: "guardianName", label: "Parent or guardian name", type: "text", half: true, hint: "Optional" },
-      { name: "email", label: "Email", type: "email", required: true, autoComplete: "email", half: true },
-      { name: "phone", label: "Phone number", type: "tel", required: true, autoComplete: "tel", half: true },
-      { name: "programme", label: "Programme of interest", type: "select", required: true, options: programmeOptions, half: true },
-      { name: "qualification", label: "Current education level", type: "select", required: true, options: [...qualificationOptions], half: true },
-      { name: "message", label: "Your question", type: "textarea", hint: "Optional. Tell us what you would like to know." },
-    ],
-  },
-  course: {
-    submit: "Send course enquiry",
-    sending: "Sending enquiry…",
-    fields: [
-      { name: "fullName", label: "Full name", type: "text", required: true, autoComplete: "name" },
-      { name: "email", label: "Email", type: "email", required: true, autoComplete: "email", half: true },
-      { name: "phone", label: "Phone number", type: "tel", required: true, autoComplete: "tel", half: true },
-      { name: "course", label: "Course of interest", type: "select", required: true, options: programmeOptions },
-      { name: "message", label: "Your question", type: "textarea", hint: "Optional" },
-    ],
-  },
-  visit: {
-    submit: "Request a visit",
-    sending: "Sending request…",
-    fields: [
-      { name: "visitorName", label: "Visitor name", type: "text", required: true, autoComplete: "name" },
-      { name: "email", label: "Email", type: "email", required: true, autoComplete: "email", half: true },
-      { name: "phone", label: "Phone number", type: "tel", required: true, autoComplete: "tel", half: true },
-      { name: "preferredDate", label: "Preferred date", type: "date", required: true, half: true, hint: "The office will confirm a time with you." },
-      { name: "visitors", label: "Number of visitors", type: "number", required: true, half: true },
-      { name: "message", label: "Anything we should know?", type: "textarea", hint: "Optional" },
-    ],
-  },
+/** Characters that can never be valid are dropped as the person types. */
+const sanitise: Record<Field["name"], (v: string) => string> = {
+  fullName: (v) => v.replace(/[^\p{L}\p{M} .'’-]/gu, "").replace(/\s{2,}/g, " ").replace(/^[\s.'’-]+/, ""),
+  email: (v) => v.replace(/\s/g, ""),
+  phone: (v) => v.replace(/[^\d\s+-]/g, ""),
+  course: (v) => v,
+};
+
+const labels: Record<FormType, { submit: string; sending: string }> = {
+  contact: { submit: "Send enquiry", sending: "Sending enquiry…" },
+  admission: { submit: "Send admission enquiry", sending: "Sending enquiry…" },
+  course: { submit: "Send course enquiry", sending: "Sending enquiry…" },
 };
 
 type Status = { state: "idle" } | { state: "sending" } | { state: "success"; message: string } | { state: "error"; message: string };
@@ -82,8 +50,8 @@ export default function EnquiryForm({
   idPrefix?: string;
   tone?: "light" | "ivory";
 }) {
-  const def = definitions[type];
-  const initial = useMemo(() => Object.fromEntries(def.fields.map((f) => [f.name, defaults[f.name] ?? (f.name === "visitors" ? "1" : "")])), [def, defaults]);
+  const def = labels[type];
+  const initial = useMemo(() => Object.fromEntries(fields.map((f) => [f.name, defaults[f.name] ?? ""])), [defaults]);
   const [values, setValues] = useState<Record<string, string>>(initial);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
@@ -102,7 +70,8 @@ export default function EnquiryForm({
     return r.success ? {} : fieldErrors(r.error);
   };
 
-  const update = (name: string, value: string) => {
+  const update = (name: Field["name"], raw: string) => {
+    const value = sanitise[name](raw);
     const next = { ...values, [name]: value };
     setValues(next);
     if (touched[name]) setErrors((e) => ({ ...e, [name]: validate(next)[name] ?? "" }));
@@ -118,10 +87,10 @@ export default function EnquiryForm({
     if (status.state === "sending") return; // prevent double submission
 
     const errs = validate(values);
-    setTouched(Object.fromEntries(def.fields.map((f) => [f.name, true])));
+    setTouched(Object.fromEntries(fields.map((f) => [f.name, true])));
     setErrors(errs);
     if (Object.keys(errs).length) {
-      const first = def.fields.find((f) => errs[f.name]);
+      const first = fields.find((f) => errs[f.name]);
       if (first) formRef.current?.querySelector<HTMLElement>(`#${idPrefix}-${first.name}`)?.focus();
       return;
     }
@@ -140,7 +109,10 @@ export default function EnquiryForm({
         setTouched({});
         setErrors({});
       } else {
-        if (data?.errors) setErrors(data.errors);
+        if (data?.errors) {
+          setErrors(data.errors);
+          setTouched(Object.fromEntries(fields.map((f) => [f.name, true])));
+        }
         setStatus({ state: "error", message: data?.message || "The form could not be sent. Check your connection and try again." });
       }
     } catch {
@@ -149,7 +121,6 @@ export default function EnquiryForm({
     requestAnimationFrame(() => statusRef.current?.focus());
   }
 
-  const today = new Date().toISOString().slice(0, 10);
   const inputBase = cx(
     "block w-full rounded-[3px] border px-4 text-[1.125rem] text-ink placeholder:text-grey transition-colors focus:outline-none focus:ring-2 focus:ring-red/25",
     tone === "ivory" ? "bg-white" : "bg-ivory/60 focus:bg-white",
@@ -191,7 +162,7 @@ export default function EnquiryForm({
       )}
 
       <div className="grid gap-x-5 gap-y-5 sm:grid-cols-2">
-        {def.fields.map((f) => {
+        {fields.map((f) => {
           const id = `${idPrefix}-${f.name}`;
           const err = touched[f.name] ? errors[f.name] : "";
           const describedBy = [f.hint && `${id}-hint`, err && `${id}-error`].filter(Boolean).join(" ") || undefined;
@@ -199,7 +170,7 @@ export default function EnquiryForm({
             id,
             name: f.name,
             value: values[f.name] ?? "",
-            required: f.required,
+            required: true,
             "aria-invalid": err ? true : undefined,
             "aria-describedby": describedBy,
             onBlur: () => blur(f.name),
@@ -210,19 +181,17 @@ export default function EnquiryForm({
               <label htmlFor={id} className="mb-1.5 flex items-baseline justify-between gap-3 text-[1.0625rem] font-semibold text-ink">
                 <span>
                   {f.label}
-                  {f.required && <span aria-hidden className="ml-0.5 text-red">*</span>}
+                  <span aria-hidden className="ml-0.5 text-red">*</span>
                 </span>
                 {f.hint && (
                   <span id={`${id}-hint`} className="text-[0.9375rem] font-normal text-muted">{f.hint}</span>
                 )}
               </label>
-              {f.type === "textarea" ? (
-                <textarea {...common} rows={4} maxLength={2000} onChange={(e) => update(f.name, e.target.value)} className={cx(common.className, "min-h-[7.5rem] resize-y py-3")} />
-              ) : f.type === "select" ? (
+              {f.type === "select" ? (
                 <div className="relative">
                   <select {...common} onChange={(e) => update(f.name, e.target.value)} className={cx(common.className, "h-12 appearance-none pr-10", !values[f.name] && "text-grey")}>
-                    <option value="" disabled>Choose an option</option>
-                    {f.options!.map((o) => (
+                    <option value="" disabled>Choose a course</option>
+                    {courseOptions.map((o) => (
                       <option key={o.value} value={o.value} className="text-ink">{o.label}</option>
                     ))}
                   </select>
@@ -232,11 +201,13 @@ export default function EnquiryForm({
                 <input
                   {...common}
                   type={f.type}
-                  inputMode={f.type === "tel" ? "tel" : f.type === "number" ? "numeric" : undefined}
+                  inputMode={f.type === "tel" ? "numeric" : f.type === "email" ? "email" : "text"}
                   autoComplete={f.autoComplete}
-                  min={f.type === "date" ? today : f.type === "number" ? 1 : undefined}
-                  max={f.type === "number" ? 10 : undefined}
-                  maxLength={f.type === "date" || f.type === "number" ? undefined : f.type === "email" ? 120 : 80}
+                  autoCapitalize={f.type === "text" ? "words" : "off"}
+                  autoCorrect="off"
+                  spellCheck={false}
+                  placeholder={f.placeholder}
+                  maxLength={f.maxLength}
                   onChange={(e) => update(f.name, e.target.value)}
                   className={cx(common.className, "h-12")}
                 />

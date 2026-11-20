@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { navigation, site, formatPhone } from "@/lib/site";
@@ -58,7 +59,13 @@ export default function Header() {
     closeTimer.current = window.setTimeout(() => setOpen(null), 160);
   }, []);
 
-  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    if (pathname.startsWith(href)) return true;
+    // A menu is also active on any page it links to directly (e.g. course pages under Academics).
+    const group = navigation.find((g) => g.href === href);
+    return !!group?.columns?.some((c) => c.links.some((l) => !l.href.includes("#") && (l.href === pathname || (l.href !== "/" && pathname.startsWith(l.href + "/")))));
+  };
   const activeGroup = navigation.find((g) => g.label === open);
 
   return (
@@ -80,8 +87,8 @@ export default function Header() {
           <ul className="flex shrink-0 items-center gap-5">
             {[
               ["Notices", "/notices"],
-              ["Scholarships", "/student-support#scholarships"],
-              ["Anti-ragging", "/student-support#anti-ragging"],
+              ["Scholarships", "/student-support/scholarships"],
+              ["Anti-ragging", "/student-support/anti-ragging"],
               ["Student support", "/student-support"],
             ].map(([l, h]) => (
               <li key={h} className="hidden lg:block">
@@ -188,29 +195,56 @@ export default function Header() {
           )}
         >
           {activeGroup?.columns && (
-            <div className="mx-auto grid max-w-[1320px] grid-cols-12 gap-10 px-12 py-10">
-              <div className="col-span-4 border-r border-stone pr-10">
-                <p className="t-h3 text-ink">{activeGroup.label}</p>
-                <p className="mt-3 text-[1.0625rem] text-muted">{activeGroup.intro}</p>
-                <Link href={activeGroup.href} className="mt-6 inline-flex items-center gap-2 text-[1.0625rem] font-semibold text-maroon">
+            <div className="mx-auto grid max-w-[1320px] grid-cols-12 gap-10 px-12 py-9">
+              <div className="col-span-3">
+                {activeGroup.image && (
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-[3px] bg-stone">
+                    <Image src={activeGroup.image.src} alt="" fill sizes="300px" className="object-cover" style={activeGroup.image.pos ? { objectPosition: activeGroup.image.pos } : undefined} />
+                  </div>
+                )}
+                <p className="t-h3 mt-5 text-ink">{activeGroup.label}</p>
+                <p className="mt-2 text-[1rem] leading-relaxed text-muted">{activeGroup.intro}</p>
+                <Link href={activeGroup.href} className="mt-4 inline-flex items-center gap-2 text-[1rem] font-semibold text-maroon">
                   <span className="link-u">Go to {activeGroup.label.toLowerCase()}</span>
                   <Arrow />
                 </Link>
               </div>
-              {activeGroup.columns.map((col) => (
-                <div key={col.heading} className="col-span-4">
-                  <p className="mb-4 text-[1rem] font-semibold text-muted">{col.heading}</p>
-                  <ul className="space-y-3">
-                    {col.links.map((l) => (
-                      <li key={l.href}>
-                        <Link href={l.href} className="link-u text-[1.1875rem] text-ink hover:text-maroon">
-                          {l.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+              <div
+                className="col-span-9 grid gap-x-8 border-l border-stone pl-10"
+                style={{ gridTemplateColumns: `repeat(${Math.max(activeGroup.columns.reduce((n, c) => n + (c.wide ? 2 : 1), 0), 2)}, minmax(0, 1fr))` }}
+              >
+                {activeGroup.columns.map((col) => (
+                  <div key={col.heading} className={col.wide ? "col-span-2" : undefined}>
+                    <p className="mb-2 border-b-2 border-red pb-2 text-[0.9375rem] font-semibold text-red">{col.heading}</p>
+                    <ul className={col.wide ? "grid grid-cols-2 gap-x-8" : undefined}>
+                      {col.links.map((l) => {
+                        const current = l.href === pathname;
+                        return (
+                          <li key={l.href}>
+                            <Link
+                              href={l.href}
+                              aria-current={current ? "page" : undefined}
+                              className={cx(
+                                "group/link -mx-3 flex items-center justify-between gap-3 rounded-[3px] px-3 text-[1.0625rem] leading-snug transition-colors",
+                                l.description ? "py-2" : "py-[0.5rem]",
+                                current ? "bg-ivory text-red" : "text-ink hover:bg-ivory hover:text-red",
+                              )}
+                            >
+                              <span className="min-w-0">
+                                <span className={cx("block", current ? "font-semibold" : "font-medium")}>{l.label}</span>
+                                {l.description && (
+                                  <span className="mt-0.5 block text-[0.9375rem] font-normal leading-snug text-muted">{l.description}</span>
+                                )}
+                              </span>
+                              <Arrow className="h-3.5 w-3.5 shrink-0 -translate-x-1 text-red opacity-0 transition-[opacity,transform] group-hover/link:translate-x-0 group-hover/link:opacity-100" />
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -280,15 +314,20 @@ function MobileMenu({ open, onClose, isActive }: { open: boolean; onClose: () =>
                 </button>
                 <div className={cx("grid transition-[grid-template-rows] duration-300", isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
                   <ul className="space-y-1 overflow-hidden">
-                    {g.columns
-                      .flatMap((c) => c.links)
-                      .map((l) => (
-                        <li key={l.href}>
-                          <Link href={l.href} tabIndex={isOpen ? 0 : -1} className="block py-2 pl-1 text-[1.1875rem] text-ink-soft">
-                            {l.label}
-                          </Link>
-                        </li>
-                      ))}
+                    {g.columns.map((c) => (
+                      <li key={c.heading} className="pt-2">
+                        <p className="pb-1 pl-1 text-[0.9375rem] font-semibold text-muted">{c.heading}</p>
+                        <ul>
+                          {c.links.map((l) => (
+                            <li key={l.href}>
+                              <Link href={l.href} tabIndex={isOpen ? 0 : -1} className="block py-2 pl-1 text-[1.1875rem] text-ink-soft">
+                                {l.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    ))}
                     <li className="h-3" />
                   </ul>
                 </div>

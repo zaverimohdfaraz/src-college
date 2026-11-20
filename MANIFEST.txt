@@ -1,63 +1,118 @@
-SRCC website — update package 3 (18 Nov 2026)
-=============================================
-This package REPLACES the earlier update zips and includes everything in them.
-Unzip over your srcc-website folder, overwrite when asked, then push and redeploy.
-No new packages, so no npm install is needed.
+SRCC website: all changes from 20 November 2026 in one package
+==============================================================
+Unzip over the project root and choose "overwrite all".
+This replaces the earlier "srcc-about-pages-update.zip"; you do not need that one.
 
-NEW IN THIS PACKAGE: college-supplied photos (staff photos not used)
-- Homepage: slider "Campus life" slide uses the college-ground event photo; the four
-  campus-life cards now show the Ayodhyam stage performance, badminton on the ground,
-  the NSS plantation drive and an industrial visit; "Inside the college" uses the
-  corridor-with-students photo.
-- Campus Life page: header photo, all four sections (culture, sport, NSS, industrial visit)
-  and a new 10-photo gallery. The NSS placeholder is gone.
-- About page header: the new "SHRI RAM COLLEGE" building-front photo.
-- The "GPS Map Camera" location stamps were cropped off the NSS and industrial-visit photos.
+ONE THING TO DELETE
+  src/components/AboutShell.tsx   only if it exists (it came in the earlier zip).
+                                  It has been replaced by SectionShell.tsx and will
+                                  break the build if left in place.
 
-ALSO INCLUDED (from earlier updates)
-- Refined crest logo with the name as sharp text; new favicon and home-screen icon.
-- "Shri Ram College of Commerce & Science" everywhere.
-- Homepage slider fits its text on phones (no overlap under the header).
-- Photos uncover gently on scroll and zoom slightly on hover; photo in "Why Shri Ram College".
+WHAT CHANGED
+  Every menu section now has a separate page for each item:
+    About ........................ /about, /about/history, /about/vision-mission,
+                                   /about/leadership, /about/trust, /about/values
+    Academics .................... /academics, /academics/teaching-and-learning,
+                                   /academics/calendar
+    Departments .................. /departments + /departments/<commerce|accounts|
+                                   information-technology|arts|mathematics>
+    Admissions ................... /admissions (with enquiry form),
+                                   /admissions/eligibility-and-documents, /admissions/faq
+    Campus life .................. /campus-life + culture-and-events, sport-and-fitness,
+                                   nss-and-community, beyond-the-classroom,
+                                   get-involved, gallery
+    Facilities ................... /facilities + library, computer-laboratory,
+                                   gymnasium, classrooms-and-hall
+    Student support .............. /student-support + scholarships, examinations,
+                                   careers, anti-ragging, grievance-redressal,
+                                   womens-safety, equal-opportunity
+    Institutional information .... /institutional-information + committees,
+                                   quality-assurance, best-practices,
+                                   mandatory-disclosures, alumni, publications
 
-FILES IN THIS PACKAGE
-  README.md
-  public/emblem.webp
-  public/images/campus/campus-corridor-students.webp
-  public/images/campus/college-front.webp
-  public/images/campus/college-ground-event.webp
-  public/images/campus/cultural-performance.webp
-  public/images/campus/industrial-visit-demo.webp
-  public/images/campus/industrial-visit-group.webp
-  public/images/campus/nss-plantation-2.webp
-  public/images/campus/nss-plantation.webp
-  public/images/campus/sports-ground.webp
+  Section pages: a side menu lists every page in the section (on phones it is a
+         tap-to-open list). The Previous/Next links and the page-card grids at
+         the bottom of section pages have been removed.
+  Desktop dropdowns (all menus): redesigned, with a photo, red group headings,
+         compact links and the current page highlighted. About, Admissions and
+         Institutional Information show a one-line description under each link;
+         Academics shows each course code with its subject, undergraduate
+         courses in two columns.
+  Homepage slider on phones: slim progress bars (tap to jump), slide name,
+         "1 of 4" and a round pause button. Swipe left/right to change slide;
+         scrolling the page no longer triggers it.
+  Menus: every link opens its own page. Academics lists all 10 courses.
+         Admissions now has a dropdown. Phone menu shows group headings.
+  Homepage: course list shows banners; videos added.
+  Course pages: duration and eligibility added; fees note instead of placeholder.
+  Placeholders: filled everywhere except President, Director, Principal and
+                Vice Principal details (left as requested).
+  Videos (public/videos): cut from the college's 8-minute video, skipping the
+                staff interviews and an editing glitch at 0:50-0:55.
+      campus-tour.mp4      48 s  homepage, campus life, gallery
+      add-on-courses.mp4   41 s  homepage, teaching and learning, beyond the classroom, gallery
+      facilities.mp4       28 s  facilities, gallery (no sound)
+
+FILES IN THIS PACKAGE (62)
+  public/images/campus/first-aid-training.webp
+  public/images/campus/placement-cell.webp
+  public/videos/add-on-courses.mp4
+  public/videos/add-on-courses.webp
+  public/videos/campus-tour.mp4
+  public/videos/campus-tour.webp
+  public/videos/facilities.mp4
+  public/videos/facilities.webp
+  src/app/about/history/page.tsx
+  src/app/about/leadership/page.tsx
   src/app/about/page.tsx
+  src/app/about/trust/page.tsx
+  src/app/about/values/page.tsx
+  src/app/about/vision-mission/page.tsx
+  src/app/academics/calendar/page.tsx
   src/app/academics/page.tsx
+  src/app/academics/teaching-and-learning/page.tsx
+  src/app/admissions/eligibility-and-documents/page.tsx
+  src/app/admissions/faq/page.tsx
   src/app/admissions/page.tsx
-  src/app/apple-icon.png
+  src/app/campus-life/beyond-the-classroom/page.tsx
+  src/app/campus-life/culture-and-events/page.tsx
+  src/app/campus-life/gallery/page.tsx
+  src/app/campus-life/get-involved/page.tsx
+  src/app/campus-life/nss-and-community/page.tsx
   src/app/campus-life/page.tsx
-  src/app/contact/page.tsx
+  src/app/campus-life/sport-and-fitness/page.tsx
   src/app/courses/[slug]/page.tsx
-  src/app/courses/page.tsx
+  src/app/departments/[slug]/page.tsx
   src/app/departments/page.tsx
+  src/app/facilities/[slug]/page.tsx
   src/app/facilities/page.tsx
-  src/app/favicon.ico
-  src/app/globals.css
-  src/app/icon.png
+  src/app/institutional-information/alumni/page.tsx
+  src/app/institutional-information/best-practices/page.tsx
+  src/app/institutional-information/committees/page.tsx
+  src/app/institutional-information/mandatory-disclosures/page.tsx
   src/app/institutional-information/page.tsx
-  src/app/layout.tsx
-  src/app/notices/page.tsx
+  src/app/institutional-information/publications/page.tsx
+  src/app/institutional-information/quality-assurance/page.tsx
   src/app/page.tsx
+  src/app/sitemap.ts
+  src/app/student-support/anti-ragging/page.tsx
+  src/app/student-support/careers/page.tsx
+  src/app/student-support/equal-opportunity/page.tsx
+  src/app/student-support/examinations/page.tsx
+  src/app/student-support/grievance-redressal/page.tsx
   src/app/student-support/page.tsx
-  src/components/Brand.tsx
+  src/app/student-support/scholarships/page.tsx
+  src/app/student-support/womens-safety/page.tsx
   src/components/Footer.tsx
   src/components/Header.tsx
   src/components/HeroSlider.tsx
+  src/components/SectionShell.tsx
+  src/components/VideoBlock.tsx
   src/components/home-bands.tsx
-  src/components/ui.tsx
+  src/components/support-bits.tsx
+  src/lib/about.ts
+  src/lib/facilities.ts
   src/lib/images.ts
+  src/lib/institutional.ts
+  src/lib/sections.ts
   src/lib/site.ts
-
-OPTIONAL CLEAN-UP
-- public/logo.webp is no longer used. You can delete it.

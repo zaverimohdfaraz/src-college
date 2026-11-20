@@ -37,9 +37,7 @@ export default function VideoBlock({
             allowFullScreen
           />
         ) : playing && mp4 ? (
-          <video className="absolute inset-0 h-full w-full" src={mp4} poster={poster} controls autoPlay playsInline>
-            <track kind="captions" />
-          </video>
+          <video className="absolute inset-0 h-full w-full bg-black" src={mp4} poster={poster} controls autoPlay playsInline />
         ) : (
           <button
             type="button"

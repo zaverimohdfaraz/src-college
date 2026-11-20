@@ -16,15 +16,13 @@ export default function PrivacyPage() {
         <div className="prose-college measure">
           <h2>What we collect</h2>
           <p>
-            When you use a form on this website — a contact message, an admission or course enquiry, or a campus visit
-            request — we collect the details you enter, such as your name, email address, phone number, the programme
-            you are interested in and your message. The email the college receives also shows the date and time of
+            When you send an enquiry through this website, we collect the four details the form asks for: your name,
+            email address, mobile number and the course you are interested in. The email the college receives also shows the date and time of
             the submission. Your network address is used briefly to protect the forms from misuse and is not kept.
           </p>
           <h2>How we use it</h2>
           <ul>
             <li>To respond to your enquiry and provide the information you asked for</li>
-            <li>To arrange a campus visit you have requested</li>
             <li>To keep a record of enquiries so that the college office can follow up properly</li>
           </ul>
           <p>

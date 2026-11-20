@@ -21,7 +21,7 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
   const [playing, setPlaying] = useState(true);
   const [hovering, setHovering] = useState(false);
   const [reduced, setReduced] = useState(false);
-  const touchX = useRef<number | null>(null);
+  const touch = useRef<{ x: number; y: number } | null>(null);
   const regionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -61,12 +61,14 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
       onMouseLeave={() => setHovering(false)}
       onFocus={() => setHovering(true)}
       onBlur={(e) => { if (!regionRef.current?.contains(e.relatedTarget as Node)) setHovering(false); }}
-      onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+      onTouchStart={(e) => (touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY })}
       onTouchEnd={(e) => {
-        if (touchX.current == null) return;
-        const dx = e.changedTouches[0].clientX - touchX.current;
-        if (Math.abs(dx) > 50) (dx < 0 ? next : prev)();
-        touchX.current = null;
+        if (!touch.current) return;
+        const dx = e.changedTouches[0].clientX - touch.current.x;
+        const dy = e.changedTouches[0].clientY - touch.current.y;
+        // Only a clearly sideways swipe changes slide, so scrolling the page never does.
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) (dx < 0 ? next : prev)();
+        touch.current = null;
       }}
       className="on-dark relative isolate bg-ink text-white"
     >
@@ -127,8 +129,57 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
         })}
       </div>
 
-      {/* Index rail: the slider's navigation and progress in one */}
-      <div className="absolute inset-x-0 bottom-0 z-20">
+      {/* Phones: slim progress segments, the slide name and a pause button. Swipe to change slide. */}
+      <div className="absolute inset-x-0 bottom-0 z-20 px-5 pb-4 sm:px-8 md:hidden">
+        <div className="flex items-end gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="flex items-baseline gap-2 text-[0.9375rem]">
+              <span className="truncate font-semibold text-white">{slides[index].rail}</span>
+              <span className="shrink-0 tabular-nums text-white/60">{index + 1} of {slides.length}</span>
+            </p>
+            <ol className="-mb-3 -mt-2 flex gap-1.5" aria-label="Slides">
+              {slides.map((s, i) => (
+                <li key={s.id} className="flex-1">
+                  <button
+                    type="button"
+                    onClick={() => go(i)}
+                    aria-current={i === index ? "true" : undefined}
+                    aria-label={`Show slide ${i + 1}: ${s.rail}`}
+                    className="flex h-11 w-full items-center"
+                  >
+                    <span aria-hidden className="relative block h-[3px] w-full overflow-hidden rounded-full bg-white/30">
+                      {i < index && <span className="absolute inset-0 bg-white/80" />}
+                      {i === index && (
+                        <span
+                          key={`m-${index}-${running}`}
+                          className="absolute inset-0 origin-left bg-white"
+                          style={running ? { animation: `rail-progress ${DURATION}ms linear both` } : undefined}
+                        />
+                      )}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <button
+            type="button"
+            onClick={() => setPlaying((p) => !p)}
+            aria-label={playing ? "Pause automatic slide changes" : "Play automatic slide changes"}
+            aria-pressed={!playing}
+            className="mb-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/40 bg-black/20 text-white backdrop-blur-sm"
+          >
+            {playing && !reduced ? (
+              <svg aria-hidden viewBox="0 0 20 20" className="h-4 w-4" fill="currentColor"><rect x="5" y="4" width="3.2" height="12" rx="0.6" /><rect x="11.8" y="4" width="3.2" height="12" rx="0.6" /></svg>
+            ) : (
+              <svg aria-hidden viewBox="0 0 20 20" className="ml-0.5 h-4 w-4" fill="currentColor"><path d="M6 4.2v11.6a.6.6 0 00.9.5l9.3-5.8a.6.6 0 000-1L6.9 3.7a.6.6 0 00-.9.5z" /></svg>
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Tablet and desktop: index rail, the slider's navigation and progress in one */}
+      <div className="absolute inset-x-0 bottom-0 z-20 hidden md:block">
         <div className="mx-auto flex max-w-[1320px] items-stretch px-0 md:px-8 lg:px-12">
           <div className="flex flex-1 items-stretch bg-red md:max-w-[56rem]">
             <ol className="hidden flex-1 md:flex" aria-label="Slides">
@@ -159,14 +210,6 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
                 );
               })}
             </ol>
-
-            {/* Mobile: compact counter */}
-            <div className="flex flex-1 items-center gap-4 px-5 md:hidden">
-              <span className="text-[1.0625rem] tabular-nums text-white/80">
-                {index + 1} / {slides.length}
-              </span>
-              <span className="truncate text-[1.0625rem] font-medium">{slides[index].rail}</span>
-            </div>
 
             <div className="flex shrink-0 border-l border-white/20">
               <button type="button" onClick={prev} aria-label="Previous slide" className="flex w-14 items-center justify-center transition-colors hover:bg-white/10">

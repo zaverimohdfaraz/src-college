@@ -31,8 +31,8 @@ const tiles = [
   { label: "Admissions", sub: "How to apply and enquire", href: "/admissions", icon: icons.admissions },
   { label: "Programmes", sub: "UG and PG courses", href: "/courses", icon: icons.programmes },
   { label: "Notices", sub: "Official announcements", href: "/notices", icon: icons.notices },
-  { label: "Examinations", sub: "Timetables and results", href: "/student-support#examinations", icon: icons.exams },
-  { label: "Scholarships", sub: "MahaDBT and NSP", href: "/student-support#scholarships", icon: icons.scholarships },
+  { label: "Examinations", sub: "Timetables and results", href: "/student-support/examinations", icon: icons.exams },
+  { label: "Scholarships", sub: "MahaDBT and NSP", href: "/student-support/scholarships", icon: icons.scholarships },
   { label: "Visit us", sub: "Map and directions", href: "/contact", icon: icons.contact },
 ];
 
