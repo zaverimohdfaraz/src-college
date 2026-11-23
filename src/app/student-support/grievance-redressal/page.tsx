@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SectionShell from "@/components/SectionShell";
 import { ContactNote, ext } from "@/components/support-bits";
+import { Committee } from "@/components/disclosure";
 
 export const metadata: Metadata = {
   title: "Grievance redressal",
@@ -48,6 +49,15 @@ export default function GrievancePage() {
         </p>
       </div>
 
+      <div className="mt-16"><Committee id="sgrc" /></div>
+      <div className="prose-college mt-12 measure">
+        <h2>Ombudsperson</h2>
+        <p>
+          The Ombudsperson for students of colleges affiliated to the University of Mumbai is appointed by the
+          University. Appeals against the decision of the college&apos;s SGRC can be made to the Ombudsperson within the
+          time limit set by the UGC regulations. Details are published on the <a href="https://mu.ac.in" target="_blank" rel="noopener noreferrer">University of Mumbai website</a>.
+        </p>
+      </div>
       <ContactNote title="Submitting a grievance">Address written grievances to the Grievance Redressal Committee.</ContactNote>
     </SectionShell>
   );

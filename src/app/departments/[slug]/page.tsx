@@ -6,6 +6,8 @@ import SectionShell from "@/components/SectionShell";
 import { Arrow } from "@/components/ui";
 import { departments, getDepartment } from "@/lib/departments";
 import { courses } from "@/lib/courses";
+import { faculty } from "@/lib/people";
+import { StatusPill } from "@/components/disclosure";
 
 // Mathematics supports quantitative programmes rather than owning one.
 const supports: Record<string, string[]> = { mathematics: ["bsc-cs", "bsc-it", "bms"] };
@@ -38,6 +40,7 @@ export default async function DepartmentPage({ params }: { params: Promise<{ slu
   const { slug } = await params;
   const d = getDepartment(slug);
   if (!d) notFound();
+  const team = faculty[d.slug] ?? [];
   const programmes = courses.filter((c) => c.department === d.slug || supports[d.slug]?.includes(c.slug));
 
   return (
@@ -82,12 +85,33 @@ export default async function DepartmentPage({ params }: { params: Promise<{ slu
         </div>
       </section>
 
-      <section aria-labelledby="h-fac" className="mt-14">
+      <section id="faculty" aria-labelledby="h-fac" className="mt-14 scroll-mt-28">
         <h2 id="h-fac" className="t-h2">Faculty</h2>
-        <p className="mt-5 measure text-ink-soft">
-          The department&apos;s teachers take classes across the programmes listed above, and each also mentors a
-          group of students. To speak with the department, contact the college office.
-        </p>
+        {team.length ? (
+          <ul className="mt-8 grid gap-x-8 gap-y-10 sm:grid-cols-2">
+            {team.map((m) => (
+              <li key={m.name} className="flex gap-5">
+                <div className="relative h-28 w-24 shrink-0 overflow-hidden bg-stone">
+                  {m.photo && <Image src={m.photo} alt={m.name ?? ""} fill sizes="96px" className="object-cover" />}
+                </div>
+                <div>
+                  <p className="font-semibold text-ink">{m.name}</p>
+                  <p className="text-[1rem] text-ink-soft">{m.role}</p>
+                  {m.designation && <p className="text-[1rem] text-muted">{m.designation}</p>}
+                  {m.email && <a href={`mailto:${m.email}`} className="link-u text-[1rem] text-ink-soft">{m.email}</a>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="measure text-ink-soft">
+              The department&apos;s teachers take classes across the programmes listed above, and each also mentors a
+              group of students.
+            </p>
+            <StatusPill tone="wait">Profiles to be published</StatusPill>
+          </div>
+        )}
       </section>
     </SectionShell>
   );

@@ -32,6 +32,14 @@ export default function CommitteesPage() {
       </div>
       <div className="prose-college mt-12 measure">
         <p>
+          Members of the statutory committees are published on the pages for{" "}
+          <a href="/student-support/womens-safety#committee-icc">the ICC</a>,{" "}
+          <a href="/student-support/grievance-redressal#committee-sgrc">grievance redressal</a>,{" "}
+          <a href="/student-support/anti-ragging#committee-antiRagging">anti-ragging</a>,{" "}
+          <a href="/student-support/equal-opportunity#committee-eoc">equal opportunity</a>,{" "}
+          <a href="/student-support/sedg-cell#committee-sedg">SEDG</a>,{" "}
+          <a href="/institutional-information/quality-assurance#committee-iqac">IQAC</a> and{" "}
+          <a href="/about/administration#committee-cdc">College Development Committee</a>.
           Each committee is led by a faculty convenor and is constituted for each academic year. Students can
           approach any committee through its convenor or the college office, which can also tell you who the current
           members are.

@@ -87,9 +87,9 @@ export default function Header() {
           <ul className="flex shrink-0 items-center gap-5">
             {[
               ["Notices", "/notices"],
-              ["Scholarships", "/student-support/scholarships"],
+              ["UGC disclosure", "/institutional-information/ugc-disclosure"],
               ["Anti-ragging", "/student-support/anti-ragging"],
-              ["Student support", "/student-support"],
+              ["Search", "/search"],
             ].map(([l, h]) => (
               <li key={h} className="hidden lg:block">
                 <Link href={h} className="text-white/90 hover:text-white hover:underline hover:underline-offset-4">{l}</Link>
@@ -162,7 +162,19 @@ export default function Header() {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 min-[375px]:gap-3">
+            <Link
+              href="/search"
+              aria-label="Search the website"
+              className={cx(
+                "flex h-11 w-11 shrink-0 items-center justify-center rounded-[3px] text-ink transition-colors hover:bg-ivory hover:text-red max-[419px]:hidden xl:hidden min-[1400px]:flex",
+                pathname === "/search" && "text-red",
+              )}
+            >
+              <svg aria-hidden viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <circle cx="8.5" cy="8.5" r="5.5" /><path d="M12.6 12.6L17 17" strokeLinecap="round" />
+              </svg>
+            </Link>
             <Link
               href="/admissions#enquire"
               className="hidden h-11 items-center whitespace-nowrap rounded-[3px] bg-red px-5 text-[1.0625rem] font-semibold text-white transition-colors hover:bg-maroon sm:inline-flex"
@@ -284,6 +296,16 @@ function MobileMenu({ open, onClose, isActive }: { open: boolean; onClose: () =>
       </div>
 
       <nav aria-label="Mobile" className="flex-1 overflow-y-auto px-5 pb-8 pt-4 sm:px-8">
+        <Link
+          href="/search"
+          tabIndex={open ? 0 : -1}
+          className="mb-3 flex min-h-12 items-center gap-3 rounded-[3px] border border-sand bg-ivory px-4 text-[1.0625rem] text-muted"
+        >
+          <svg aria-hidden viewBox="0 0 20 20" className="h-5 w-5 text-ink" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <circle cx="8.5" cy="8.5" r="5.5" /><path d="M12.6 12.6L17 17" strokeLinecap="round" />
+          </svg>
+          Search the website
+        </Link>
         <ul className="divide-y divide-stone">
           <li>
             <Link href="/" className={cx("block py-4 font-serif text-[1.75rem]", isActive("/") && "text-maroon")}>Home</Link>

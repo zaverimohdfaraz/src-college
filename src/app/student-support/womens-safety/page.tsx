@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SectionShell from "@/components/SectionShell";
 import { ContactNote } from "@/components/support-bits";
+import { Committee } from "@/components/disclosure";
 
 export const metadata: Metadata = {
   title: "Women's safety and the ICC",
@@ -42,6 +43,7 @@ export default function WomensSafetyPage() {
         </ul>
       </div>
 
+      <div className="mt-16"><Committee id="icc" /></div>
       <ContactNote title="Contacting the ICC">Mark your letter or email &ldquo;Confidential: Internal Complaints Committee&rdquo;.</ContactNote>
     </SectionShell>
   );

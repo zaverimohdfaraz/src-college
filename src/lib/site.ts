@@ -124,11 +124,12 @@ export const navigation: NavGroup[] = [
   {
     label: "Institutional Information",
     href: "/institutional-information",
-    intro: "Committees, quality assurance and institutional documents.",
+    intro: "Governance, official documents, the UGC self-disclosure and the information corner.",
     image: photos.exterior,
     columns: [
-      { heading: "Governance", links: navLinks("institutional", undefined, true) },
-      { heading: "Rights and safety", links: navLinks("support", "Rights and safety", true) },
+      { heading: "Governance", links: navLinks("institutional", "Governance") },
+      { heading: "Information corner", links: [{ label: "Notices and circulars", href: "/notices" }, ...navLinks("institutional", "Information corner")] },
+      { heading: "Rights and safety", links: navLinks("support", "Rights and safety") },
     ],
   },
   { label: "Contact", href: "/contact" },

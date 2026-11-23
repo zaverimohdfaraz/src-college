@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SectionShell from "@/components/SectionShell";
-import { ContactNote, ext } from "@/components/support-bits";
+import { ext } from "@/components/support-bits";
+import { DocumentList, Committee } from "@/components/disclosure";
 
 export const metadata: Metadata = {
   title: "Quality assurance and accreditation",
@@ -49,7 +50,9 @@ export default function QualityPage() {
           process are on the <a href="http://www.naac.gov.in" {...ext}>NAAC website</a>.
         </p>
       </div>
-      <ContactNote title="Accreditation documents">The current accreditation certificate, Self Study Report and AQARs can be requested from the college office.</ContactNote>
+      <h2 className="t-h2 mt-16">Accreditation and quality documents</h2>
+      <DocumentList ids={["naacCertificate", "naacSsr", "aqar", "nirf", "iqacComposition", "iqacMinutes"]} className="mt-6" />
+      <div className="mt-16"><Committee id="iqac" /></div>
     </SectionShell>
   );
 }

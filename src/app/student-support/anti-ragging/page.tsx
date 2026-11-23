@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SectionShell from "@/components/SectionShell";
 import { ext } from "@/components/support-bits";
+import { Committee } from "@/components/disclosure";
 
 export const metadata: Metadata = {
   title: "Anti-ragging",
@@ -52,6 +53,7 @@ export default function AntiRaggingPage() {
           <a href="https://www.antiragging.in" {...ext}>antiragging.in</a> at the time of admission.
         </p>
       </div>
+      <div className="mt-16"><Committee id="antiRagging" /></div>
     </SectionShell>
   );
 }

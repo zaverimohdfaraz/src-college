@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Container, PageHero, ButtonLink } from "@/components/ui";
 import { MapEmbed, ContactLines } from "@/components/sections";
 import EnquiryForm from "@/components/EnquiryForm";
-import { site } from "@/lib/site";
+import { directory } from "@/lib/people";
+import { StatusPill } from "@/components/disclosure";
+import { site, formatPhone } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -17,7 +19,7 @@ export default function ContactPage() {
       <PageHero
         crumbs={[{ label: "Contact" }]}
         title="Contact the college"
-        intro="Call, email or send a message using the form below. To see the campus for yourself, request a visit."
+        intro="Call, email or send a message using the form below. To visit the campus, call the college office to arrange a convenient time."
       />
 
       <section aria-labelledby="h-reach" className="py-16 lg:py-24">
@@ -40,6 +42,35 @@ export default function ContactPage() {
           <div className="lg:col-span-7">
             <MapEmbed className="aspect-[4/3] border border-stone lg:aspect-auto lg:h-full lg:min-h-[30rem]" title={`Map: ${site.name}, Bhandup West`} />
           </div>
+        </Container>
+      </section>
+
+      <section id="directory" aria-labelledby="h-directory" className="scroll-mt-28 border-t border-stone py-16 lg:py-24">
+        <Container className="grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <h2 id="h-directory" className="t-h2">Telephone directory</h2>
+            <p className="mt-4 text-ink-soft">Office hours and direct lines for each section are added as they are confirmed.</p>
+          </div>
+          <dl className="divide-y divide-stone border-y border-stone lg:col-span-8">
+            {directory.map((d, i) => (
+              <div key={d.office + i} className="flex flex-col gap-1 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+                <dt className="text-ink">{d.office}</dt>
+                <dd>
+                  {d.phone ? (
+                    <a href={`tel:+91${d.phone}`} className="link-u font-semibold text-ink">{formatPhone(d.phone)}</a>
+                  ) : d.email ? (
+                    <a href={`mailto:${d.email}`} className="link-u font-semibold text-ink">{d.email}</a>
+                  ) : (
+                    <StatusPill tone="wait">To be published</StatusPill>
+                  )}
+                </dd>
+              </div>
+            ))}
+            <div className="flex flex-col gap-1 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+              <dt className="text-ink">Official email</dt>
+              <dd><a href={`mailto:${site.email}`} className="link-u font-semibold text-ink">{site.email}</a></dd>
+            </div>
+          </dl>
         </Container>
       </section>
 

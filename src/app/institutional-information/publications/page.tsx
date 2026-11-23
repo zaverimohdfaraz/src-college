@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SectionShell from "@/components/SectionShell";
+import { DocumentList } from "@/components/disclosure";
 
 export const metadata: Metadata = {
   title: "College publications",
@@ -15,7 +16,7 @@ export default function PublicationsPage() {
       intro="The college magazine, produced by the Magazine Committee, features writing, art and reports by students and staff."
     >
       <div className="prose-college measure">
-        <h2>The college magazine</h2>
+        <h2>The college magazine and newsletters</h2>
         <p>
           The magazine records the year at the college: events, achievements, NSS work and visits, alongside essays,
           poems, stories, artwork and photography by students.
@@ -29,6 +30,7 @@ export default function PublicationsPage() {
         <h2>Reading past issues</h2>
         <p>Ask at the library or the college office for current and past issues.</p>
       </div>
+      <DocumentList ids={["newsletters"]} className="mt-8" />
     </SectionShell>
   );
 }

@@ -3,6 +3,8 @@ import Link from "next/link";
 import SectionShell from "@/components/SectionShell";
 import { Arrow } from "@/components/ui";
 import { departments } from "@/lib/departments";
+import { faculty } from "@/lib/people";
+import { StatusPill } from "@/components/disclosure";
 
 export const metadata: Metadata = {
   title: "Departments",
@@ -37,6 +39,22 @@ export default function DepartmentsPage() {
           </li>
         ))}
       </ul>
+
+      <section id="faculty" aria-labelledby="h-faculty" className="mt-16 scroll-mt-28">
+        <h2 id="h-faculty" className="t-h2">Faculty</h2>
+        <p className="mt-4 measure text-ink-soft">Faculty profiles with photographs are listed on each department&apos;s page.</p>
+        <ul className="mt-6 divide-y divide-stone border-y border-stone">
+          {departments.map((d) => {
+            const n = (faculty[d.slug] ?? []).length;
+            return (
+              <li key={d.slug} className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+                <Link href={`/departments/${d.slug}#faculty`} className="link-u text-ink hover:text-red">{d.name}</Link>
+                {n ? <StatusPill tone="ok">{n} profile{n === 1 ? "" : "s"}</StatusPill> : <StatusPill tone="wait">To be published</StatusPill>}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
     </SectionShell>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SectionShell from "@/components/SectionShell";
 import { Arrow } from "@/components/ui";
+import { DocumentList } from "@/components/disclosure";
 
 export const metadata: Metadata = {
   title: "Academic calendar",
@@ -44,7 +45,9 @@ export default function CalendarPage() {
         ))}
       </ol>
 
-      <div className="prose-college mt-14 measure">
+      <h2 className="t-h2 mt-16">Calendar for the current year</h2>
+      <DocumentList ids={["academicCalendar"]} className="mt-6" />
+      <div className="prose-college mt-10 measure">
         <p>
           Dates for the current year, including examination timetables and holidays, are announced on the notices page
           and the college notice board.

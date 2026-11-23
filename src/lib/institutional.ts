@@ -8,6 +8,8 @@ export const committees = [
       ["Internal Complaints Committee (ICC)", "Inquires into complaints of sexual harassment under the 2013 Act."],
       ["Grievance Redressal Committee", "Hears student grievances under the UGC regulations of 2023."],
       ["Discipline Committee", "Upholds the code of conduct and a respectful campus environment."],
+      ["Equal Opportunity Cell", "Ensures equal access and helps students who face disadvantage or discrimination."],
+      ["SEDG Cell", "Supports students from socio-economically disadvantaged groups."],
       ["Attendance Committee", "Monitors attendance and supports students at risk of falling behind."],
     ],
   },
@@ -34,15 +36,4 @@ export const committees = [
       ["Alumni Association", "Connects graduates with the college."],
     ],
   },
-];
-
-export const disclosures = [
-  "Affiliation letters from the University of Mumbai",
-  "Recognition and approval documents",
-  "NAAC accreditation certificates and Self Study Reports",
-  "Annual Quality Assurance Reports (AQAR)",
-  "AISHE certificates",
-  "Right to Information (RTI): Public Information Officer and Appellate Authority",
-  "Composition of statutory committees",
-  "Audited financial statements, where required",
 ];

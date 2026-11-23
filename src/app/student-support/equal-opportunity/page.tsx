@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import SectionShell from "@/components/SectionShell";
 import { ContactNote } from "@/components/support-bits";
+import { Committee } from "@/components/disclosure";
 
 export const metadata: Metadata = {
-  title: "Equal opportunity",
+  title: "Equal Opportunity Cell",
   description: "Equal access for every student at Shri Ram College of Commerce & Science, and help for students with particular needs.",
   alternates: { canonical: "/student-support/equal-opportunity" },
 };
@@ -17,8 +18,9 @@ export default function EqualOpportunityPage() {
     >
       <div className="prose-college measure">
         <p className="t-lead">
-          Equal access is part of the college&apos;s mission. Every student has the same right to teaching, facilities,
-          activities and support.
+          Equal access is part of the college&apos;s mission. The Equal Opportunity Cell makes sure every student has the
+          same right to teaching, facilities, activities and support, and helps students who face disadvantage or
+          discrimination.
         </p>
         <h2>Support for particular needs</h2>
         <p>
@@ -38,6 +40,7 @@ export default function EqualOpportunityPage() {
           raise it through the grievance redressal process.
         </p>
       </div>
+      <div className="mt-16"><Committee id="eoc" /></div>
       <ContactNote />
     </SectionShell>
   );

@@ -1,118 +1,89 @@
-SRCC website: all changes from 20 November 2026 in one package
-==============================================================
-Unzip over the project root and choose "overwrite all".
-This replaces the earlier "srcc-about-pages-update.zip"; you do not need that one.
+SRCC website update: UGC Public Self-Disclosure (23 November 2026)
+===================================================================
+Unzip over the project root and choose "overwrite all". Nothing needs deleting.
+This replaces srcc-website-ugc-2026-11-23.zip (it contains everything from it).
 
-ONE THING TO DELETE
-  src/components/AboutShell.tsx   only if it exists (it came in the earlier zip).
-                                  It has been replaced by SectionShell.tsx and will
-                                  break the build if left in place.
+WHAT'S NEW
+  /institutional-information/ugc-disclosure  Every item (a-j) of the UGC guidelines, with
+                         links and a live status (Published / Document awaited / Names awaited).
+  /search                Site-wide search (required by the guidelines). Search icon in the
+                         header, "Search" in the top bar, in the phone menu and footer.
+  Document registry      src/lib/documents.ts + public/documents/ (drop PDFs in, set `file`).
+  People registry        src/lib/people.ts (officers, committees, RTI, directory, faculty).
 
-WHAT CHANGED
-  Every menu section now has a separate page for each item:
-    About ........................ /about, /about/history, /about/vision-mission,
-                                   /about/leadership, /about/trust, /about/values
-    Academics .................... /academics, /academics/teaching-and-learning,
-                                   /academics/calendar
-    Departments .................. /departments + /departments/<commerce|accounts|
-                                   information-technology|arts|mathematics>
-    Admissions ................... /admissions (with enquiry form),
-                                   /admissions/eligibility-and-documents, /admissions/faq
-    Campus life .................. /campus-life + culture-and-events, sport-and-fitness,
-                                   nss-and-community, beyond-the-classroom,
-                                   get-involved, gallery
-    Facilities ................... /facilities + library, computer-laboratory,
-                                   gymnasium, classrooms-and-hall
-    Student support .............. /student-support + scholarships, examinations,
-                                   careers, anti-ragging, grievance-redressal,
-                                   womens-safety, equal-opportunity
-    Institutional information .... /institutional-information + committees,
-                                   quality-assurance, best-practices,
-                                   mandatory-disclosures, alumni, publications
+NEW PAGES
+  /about/administration                     Principal, officers, CDC, Ombudsperson, ICC, HoDs
+  /academics/open-and-distance-learning     YCMOU study centre programmes
+  /academics/regulations                    University ordinances and regulations
+  /academics/research                       R&D, entrepreneurship, central facilities
+  /academics/collaborations                 MoUs
+  /admissions/fees                          Prospectus, fee structure, fee refund policy
+  /admissions/international-students        Study in India / foreign students
+  /student-support/health                   Health facilities
+  /student-support/sedg-cell                SEDG Cell
+  /student-support/accessibility            Facilities for differently-abled students
+  /institutional-information/news           News, events and achievements
+  /institutional-information/job-openings   Job openings (src/lib/jobs.ts)
+  /institutional-information/rti            RTI officers and procedure
 
-  Section pages: a side menu lists every page in the section (on phones it is a
-         tap-to-open list). The Previous/Next links and the page-card grids at
-         the bottom of section pages have been removed.
-  Desktop dropdowns (all menus): redesigned, with a photo, red group headings,
-         compact links and the current page highlighted. About, Admissions and
-         Institutional Information show a one-line description under each link;
-         Academics shows each course code with its subject, undergraduate
-         courses in two columns.
-  Homepage slider on phones: slim progress bars (tap to jump), slide name,
-         "1 of 4" and a round pause button. Swipe left/right to change slide;
-         scrolling the page no longer triggers it.
-  Menus: every link opens its own page. Academics lists all 10 courses.
-         Admissions now has a dropdown. Phone menu shows group headings.
-  Homepage: course list shows banners; videos added.
-  Course pages: duration and eligibility added; fees note instead of placeholder.
-  Placeholders: filled everywhere except President, Director, Principal and
-                Vice Principal details (left as requested).
-  Videos (public/videos): cut from the college's 8-minute video, skipping the
-                staff interviews and an editing glitch at 0:50-0:55.
-      campus-tour.mp4      48 s  homepage, campus life, gallery
-      add-on-courses.mp4   41 s  homepage, teaching and learning, beyond the classroom, gallery
-      facilities.mp4       28 s  facilities, gallery (no sound)
+EMPTY SLOTS FOR EVERYTHING STILL TO COME
+  Every item on the UGC page links straight to the exact spot where its document,
+  names or details will appear. Until then each spot shows "To be published".
+  New slots in this version: academic calendar PDF (/academics/calendar), research
+  and incubation details (/academics/research), hostel (/facilities#hostel),
+  barrier-free access (/student-support/accessibility), health facilities
+  (/student-support/health), faculty overview (/departments#faculty).
 
-FILES IN THIS PACKAGE (62)
-  public/images/campus/first-aid-training.webp
-  public/images/campus/placement-cell.webp
-  public/videos/add-on-courses.mp4
-  public/videos/add-on-courses.webp
-  public/videos/campus-tour.mp4
-  public/videos/campus-tour.webp
-  public/videos/facilities.mp4
-  public/videos/facilities.webp
-  src/app/about/history/page.tsx
-  src/app/about/leadership/page.tsx
-  src/app/about/page.tsx
-  src/app/about/trust/page.tsx
-  src/app/about/values/page.tsx
-  src/app/about/vision-mission/page.tsx
+UPDATED
+  Documents and reports page now lists every official document by category.
+  Committee member tables on ICC, SGRC (+ Ombudsperson), anti-ragging, Equal Opportunity
+  Cell, IQAC pages. Faculty profiles section on each department page.
+  Telephone directory on the contact page. Menus, footer and top bar updated.
+
+WHAT THE COLLEGE NEEDS TO SEND
+  See UGC-DOCUMENTS-NEEDED.md (23 documents, names for officers/committees, facts to confirm).
+
+FILES IN THIS PACKAGE (43)
+  UGC-DOCUMENTS-NEEDED.md
+  public/documents/.gitkeep
+  src/app/about/administration/page.tsx
   src/app/academics/calendar/page.tsx
-  src/app/academics/page.tsx
-  src/app/academics/teaching-and-learning/page.tsx
-  src/app/admissions/eligibility-and-documents/page.tsx
-  src/app/admissions/faq/page.tsx
-  src/app/admissions/page.tsx
-  src/app/campus-life/beyond-the-classroom/page.tsx
-  src/app/campus-life/culture-and-events/page.tsx
-  src/app/campus-life/gallery/page.tsx
-  src/app/campus-life/get-involved/page.tsx
-  src/app/campus-life/nss-and-community/page.tsx
-  src/app/campus-life/page.tsx
-  src/app/campus-life/sport-and-fitness/page.tsx
-  src/app/courses/[slug]/page.tsx
+  src/app/academics/collaborations/page.tsx
+  src/app/academics/open-and-distance-learning/page.tsx
+  src/app/academics/regulations/page.tsx
+  src/app/academics/research/page.tsx
+  src/app/admissions/fees/page.tsx
+  src/app/admissions/international-students/page.tsx
+  src/app/contact/page.tsx
   src/app/departments/[slug]/page.tsx
   src/app/departments/page.tsx
-  src/app/facilities/[slug]/page.tsx
   src/app/facilities/page.tsx
-  src/app/institutional-information/alumni/page.tsx
-  src/app/institutional-information/best-practices/page.tsx
   src/app/institutional-information/committees/page.tsx
+  src/app/institutional-information/job-openings/page.tsx
   src/app/institutional-information/mandatory-disclosures/page.tsx
-  src/app/institutional-information/page.tsx
+  src/app/institutional-information/news/page.tsx
   src/app/institutional-information/publications/page.tsx
   src/app/institutional-information/quality-assurance/page.tsx
-  src/app/page.tsx
+  src/app/institutional-information/rti/page.tsx
+  src/app/institutional-information/ugc-disclosure/page.tsx
+  src/app/search/page.tsx
   src/app/sitemap.ts
+  src/app/student-support/accessibility/page.tsx
   src/app/student-support/anti-ragging/page.tsx
-  src/app/student-support/careers/page.tsx
   src/app/student-support/equal-opportunity/page.tsx
-  src/app/student-support/examinations/page.tsx
   src/app/student-support/grievance-redressal/page.tsx
-  src/app/student-support/page.tsx
-  src/app/student-support/scholarships/page.tsx
+  src/app/student-support/health/page.tsx
+  src/app/student-support/sedg-cell/page.tsx
   src/app/student-support/womens-safety/page.tsx
   src/components/Footer.tsx
   src/components/Header.tsx
-  src/components/HeroSlider.tsx
-  src/components/SectionShell.tsx
-  src/components/VideoBlock.tsx
-  src/components/home-bands.tsx
-  src/components/support-bits.tsx
-  src/lib/about.ts
-  src/lib/facilities.ts
-  src/lib/images.ts
+  src/components/SiteSearch.tsx
+  src/components/disclosure.tsx
+  src/lib/documents.ts
   src/lib/institutional.ts
+  src/lib/jobs.ts
+  src/lib/people.ts
+  src/lib/search-index.ts
   src/lib/sections.ts
   src/lib/site.ts
+  src/lib/ugc.ts
